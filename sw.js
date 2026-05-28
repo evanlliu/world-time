@@ -1,4 +1,4 @@
-const CACHE_NAME = "world-clock-v4-icon-updated";
+const CACHE_NAME = "world-clock-v4";
 const APP_SHELL = [
   "./",
   "./index.html",
