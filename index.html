@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>World Time Dashboard Pro</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/utc.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/timezone.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background-glow"></div>
+
+    <div class="container mx-auto px-4 py-10">
+
+
+
+        <div class="add-panel mb-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+                <input id="cityName"
+                    type="text"
+                    placeholder="城市名称"
+                    class="input-box">
+
+                <input id="countryName"
+                    type="text"
+                    placeholder="国家名称"
+                    class="input-box">
+
+                <input id="timezone"
+                    type="text"
+                    placeholder="时区 例如 Asia/Shanghai"
+                    class="input-box">
+
+                <button id="addBtn" class="add-btn">
+                    + 添加城市
+                </button>
+            </div>
+        </div>
+
+        <div id="clockGrid"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
