@@ -1,4 +1,4 @@
-const CACHE_NAME = "world-clock-v5";
+const CACHE_NAME = "world-clock-v14-dial-state";
 const APP_SHELL = [
   "./",
   "./index.html",
