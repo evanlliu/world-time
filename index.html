@@ -1493,11 +1493,14 @@
     @media (max-width: 860px) {
       html, body {
         height: auto;
-        min-height: max(var(--app-height), 100dvh);
+        min-height: 100vh;
+        min-height: var(--app-height);
+        min-height: 100dvh;
         overflow-x: hidden;
         overflow-y: auto;
         overscroll-behavior: none;
         touch-action: pan-y;
+        background-color: var(--page-grad-2);
       }
 
       body {
@@ -1517,15 +1520,43 @@
         background-size: cover;
       }
 
+      body::before,
+      body::after {
+        bottom: calc(-160px - env(safe-area-inset-bottom));
+      }
+
       .app {
+        position: relative;
+        isolation: isolate;
         height: auto;
-        min-height: max(var(--app-height), 100dvh);
+        min-height: 100vh;
+        min-height: var(--app-height);
+        min-height: 100dvh;
         overflow: visible;
         padding:
           max(12px, env(safe-area-inset-top))
           max(12px, env(safe-area-inset-right))
           calc(max(12px, env(safe-area-inset-bottom)) + 18px)
           max(12px, env(safe-area-inset-left));
+      }
+
+      .app::before {
+        content: "";
+        position: fixed;
+        inset: -80px 0 calc(-220px - env(safe-area-inset-bottom));
+        z-index: -1;
+        pointer-events: none;
+        background:
+          radial-gradient(circle at 12% 18%, var(--page-glow-a), transparent 26%),
+          radial-gradient(circle at 88% 14%, var(--page-glow-b), transparent 28%),
+          radial-gradient(circle at 72% 82%, var(--page-glow-c), transparent 24%),
+          radial-gradient(circle at 16% 84%, var(--page-glow-d), transparent 24%),
+          linear-gradient(160deg, var(--page-grad-1) 0%, var(--page-grad-2) 52%, var(--page-grad-3) 100%);
+      }
+
+      .shell {
+        position: relative;
+        z-index: 1;
       }
 
       .shell {
