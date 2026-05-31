@@ -1427,6 +1427,39 @@
 
     }
 
+    @media (min-width: 1025px) {
+      .clock-card:not([data-id="local"]) .card-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        width: fit-content;
+        max-width: 100%;
+        grid-template-columns: none;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill {
+        width: auto;
+        flex: 0 0 auto;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill::before {
+        width: auto;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill::after {
+        flex: 0 1 auto;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill.utc-pill {
+        min-width: 132px;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill.diff-pill {
+        min-width: 168px;
+      }
+    }
+
     @media (max-width: 1024px) {
       .shell {
         grid-template-columns: 1fr;
