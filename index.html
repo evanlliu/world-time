@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#eef4ff" />
   <meta name="color-scheme" content="light dark" />
   <meta name="apple-mobile-web-app-title" content="世界时钟" />
@@ -91,6 +91,10 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
     html, body {
       width: 100%;
       min-height: 100%;
@@ -138,6 +142,7 @@
       transition: background .45s ease;
     }
 
+    :root[data-app-phase="early"],
     body[data-app-phase="early"] {
       --page-grad-1: #fbf8f1;
       --page-grad-2: #eef5ff;
@@ -150,6 +155,7 @@
       --page-overlay-bottom: rgba(93, 58, 24, .04);
     }
 
+    :root[data-app-phase="morning"],
     body[data-app-phase="morning"] {
       --page-grad-1: #eefcf6;
       --page-grad-2: #e1f7f6;
@@ -162,6 +168,7 @@
       --page-overlay-bottom: rgba(17, 24, 39, .03);
     }
 
+    :root[data-app-phase="day"],
     body[data-app-phase="day"] {
       --page-grad-1: #fff9f2;
       --page-grad-2: #fff2f8;
@@ -174,6 +181,7 @@
       --page-overlay-bottom: rgba(68, 35, 21, .05);
     }
 
+    :root[data-app-phase="night"],
     body[data-app-phase="night"] {
       --page-grad-1: #dbe3f6;
       --page-grad-2: #cad6f0;
@@ -186,6 +194,7 @@
       --page-overlay-bottom: rgba(6, 12, 24, .28);
     }
 
+    :root[data-app-phase="late"],
     body[data-app-phase="late"] {
       --page-grad-1: #c4cfdf;
       --page-grad-2: #aebcd2;
@@ -199,7 +208,8 @@
     }
 
     @media (prefers-color-scheme: dark) {
-      body[data-app-phase="early"] {
+      :root[data-app-phase="early"],
+    body[data-app-phase="early"] {
         --page-grad-1: #241c18;
         --page-grad-2: #1a2030;
         --page-grad-3: #120f17;
@@ -211,7 +221,8 @@
         --page-overlay-bottom: rgba(2, 5, 12, .36);
       }
 
-      body[data-app-phase="morning"] {
+      :root[data-app-phase="morning"],
+    body[data-app-phase="morning"] {
         --page-grad-1: #0f2a26;
         --page-grad-2: #122c35;
         --page-grad-3: #111826;
@@ -223,7 +234,8 @@
         --page-overlay-bottom: rgba(2, 6, 14, .38);
       }
 
-      body[data-app-phase="day"] {
+      :root[data-app-phase="day"],
+    body[data-app-phase="day"] {
         --page-grad-1: #2b1c1a;
         --page-grad-2: #291a28;
         --page-grad-3: #141321;
@@ -235,7 +247,8 @@
         --page-overlay-bottom: rgba(2, 6, 14, .40);
       }
 
-      body[data-app-phase="night"] {
+      :root[data-app-phase="night"],
+    body[data-app-phase="night"] {
         --page-grad-1: #07101f;
         --page-grad-2: #0a1430;
         --page-grad-3: #0b1026;
@@ -247,7 +260,8 @@
         --page-overlay-bottom: rgba(1, 4, 10, .62);
       }
 
-      body[data-app-phase="late"] {
+      :root[data-app-phase="late"],
+    body[data-app-phase="late"] {
         --page-grad-1: #02060f;
         --page-grad-2: #050a18;
         --page-grad-3: #070d1d;
@@ -1479,14 +1493,33 @@
     @media (max-width: 860px) {
       html, body {
         height: auto;
-        min-height: var(--app-height);
+        min-height: max(var(--app-height), 100dvh);
         overflow-x: hidden;
         overflow-y: auto;
+        overscroll-behavior: none;
+        touch-action: pan-y;
+      }
+
+      body {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+
+      html {
+        background:
+          radial-gradient(circle at 12% 18%, var(--page-glow-a), transparent 26%),
+          radial-gradient(circle at 88% 14%, var(--page-glow-b), transparent 28%),
+          radial-gradient(circle at 72% 82%, var(--page-glow-c), transparent 24%),
+          radial-gradient(circle at 16% 84%, var(--page-glow-d), transparent 24%),
+          linear-gradient(160deg, var(--page-grad-1) 0%, var(--page-grad-2) 52%, var(--page-grad-3) 100%);
+        background-repeat: no-repeat;
+        background-size: cover;
       }
 
       .app {
         height: auto;
-        min-height: var(--app-height);
+        min-height: max(var(--app-height), 100dvh);
         overflow: visible;
         padding:
           max(12px, env(safe-area-inset-top))
@@ -1558,6 +1591,10 @@
       .clock-card {
         padding: 16px;
         gap: 14px;
+      }
+
+      .card-bottom {
+        margin-top: 6px;
       }
       .city { font-size: 24px; }
       .city-group {
@@ -1745,9 +1782,31 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script>
     $(function () {
+      function lockMobileGestures() {
+        var lastTouchEnd = 0;
+
+        document.addEventListener("touchend", function (event) {
+          var now = Date.now();
+          if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+          }
+          lastTouchEnd = now;
+        }, { passive: false });
+
+        ["gesturestart", "gesturechange", "gestureend"].forEach(function (eventName) {
+          document.addEventListener(eventName, function (event) {
+            event.preventDefault();
+          }, { passive: false });
+        });
+      }
+
+      lockMobileGestures();
+
       function syncViewportHeight() {
         var viewport = window.visualViewport;
-        var height = viewport && viewport.height ? viewport.height : window.innerHeight;
+        var standalone = window.navigator.standalone ||
+          (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
+        var height = standalone ? window.innerHeight : (viewport && viewport.height ? viewport.height : window.innerHeight);
         document.documentElement.style.setProperty("--app-height", Math.round(height) + "px");
       }
 
@@ -1770,6 +1829,7 @@
           late: "#c4cede"
         };
 
+        document.documentElement.setAttribute("data-app-phase", phaseKey);
         document.body.setAttribute("data-app-phase", phaseKey);
         var heroPanel = document.getElementById("heroPanel");
         if (heroPanel) {
