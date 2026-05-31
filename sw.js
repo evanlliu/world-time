@@ -1,4 +1,4 @@
-const CACHE_NAME = "world-clock-v14-6-30-language-fab-subtle";
+const CACHE_NAME = "world-clock-v14-6-32-local-relation-label";
 const APP_SHELL = [
   "./",
   "./index.html",

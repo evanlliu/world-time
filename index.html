@@ -1215,6 +1215,14 @@
       min-width: 0;
     }
 
+    .card-pill.diff-pill.is-same {
+      gap: 0;
+    }
+
+    .card-pill.diff-pill.is-same .pill-label {
+      display: none;
+    }
+
     .phase-early .phase-icon,
     .phase-morning .phase-icon,
     .phase-day .phase-icon,
@@ -1412,6 +1420,16 @@
       }
 
       .card-pill.diff-pill::after {
+        content: attr(data-value);
+      }
+
+      .card-pill.diff-pill.is-same::before {
+        content: "";
+        display: none;
+        margin-right: 0;
+      }
+
+      .card-pill.diff-pill.is-same::after {
         content: attr(data-value);
       }
 
@@ -1989,6 +2007,13 @@
         word-break: break-word;
         line-height: 1.3;
       }
+
+      html[lang="en"] .card-pill.diff-pill.is-same,
+      html[lang="tr"] .card-pill.diff-pill.is-same {
+        display: inline-flex;
+        width: auto;
+        flex: 0 0 auto;
+      }
     }
 
     @media (max-width: 860px) {
@@ -2351,7 +2376,14 @@
           today: "今天",
           synced: "已同步",
           timeZoneLabel: "时区",
+          localDateLabel: "当地日期",
+          dateToday: "今天",
+          dateTomorrow: "明天",
+          dateYesterday: "昨天",
           localDiffLabel: "相对本地",
+          aheadOfYouLabel: "比你快",
+          behindYouLabel: "比你慢",
+          sameZoneDirect: "同一时区",
           heroZonePrefix: "时区：",
           cities: {
             local: "当前位置",
@@ -2386,7 +2418,14 @@
           today: "Today",
           synced: "Synced",
           timeZoneLabel: "Time zone",
+          localDateLabel: "Local date",
+          dateToday: "Today",
+          dateTomorrow: "Tomorrow",
+          dateYesterday: "Yesterday",
           localDiffLabel: "Relative to local",
+          aheadOfYouLabel: "Ahead of you",
+          behindYouLabel: "Behind you",
+          sameZoneDirect: "Same time zone",
           heroZonePrefix: "Time zone: ",
           cities: {
             local: "Current Location",
@@ -2422,7 +2461,14 @@
           today: "Bugün",
           synced: "Senkronize edildi",
           timeZoneLabel: "Saat dilimi",
+          localDateLabel: "Yerel tarih",
+          dateToday: "Bugün",
+          dateTomorrow: "Yarın",
+          dateYesterday: "Dün",
           localDiffLabel: "Yerel saate göre",
+          aheadOfYouLabel: "Senden ileride",
+          behindYouLabel: "Senden geride",
+          sameZoneDirect: "Aynı saat dilimi",
           heroZonePrefix: "Saat dilimi: ",
           cities: {
             local: "Mevcut konum",
@@ -2730,29 +2776,55 @@
         return "UTC" + sign + pad(Math.floor(abs / 60)) + ":" + pad(abs % 60);
       }
 
-      function formatDiff(targetMinutes, localMinutes) {
-        var dictionary = texts();
-        var diff = targetMinutes - localMinutes;
-        if (diff === 0) return dictionary.sameZone;
+      function getDateSerial(parts) {
+        return Math.round(Date.UTC(parts.year, parts.month - 1, parts.day) / 86400000);
+      }
 
-        var abs = Math.abs(diff);
-        var hours = Math.floor(abs / 60);
-        var minutes = abs % 60;
+      function formatLocalDateRelation(targetParts, localParts) {
+        var dictionary = texts();
+        var diffDays = getDateSerial(targetParts) - getDateSerial(localParts);
+
+        if (diffDays === 0) return dictionary.dateToday;
+        if (diffDays === 1) return dictionary.dateTomorrow;
+        if (diffDays === -1) return dictionary.dateYesterday;
+
+        return formatMonthDay(targetParts);
+      }
+
+      function formatTimeAmount(minutesValue) {
+        var hours = Math.floor(minutesValue / 60);
+        var minutes = minutesValue % 60;
 
         if (currentLang === "zh") {
-          var sign = diff > 0 ? dictionary.ahead : dictionary.behind;
-          return minutes === 0 ? sign + hours + dictionary.hour : sign + hours + dictionary.hour + minutes + dictionary.minute;
+          return minutes === 0 ? hours + "小时" : hours + "小时" + minutes + "分钟";
         }
 
         if (currentLang === "tr") {
-          var trDirection = diff > 0 ? dictionary.ahead : dictionary.behind;
-          var trAmount = minutes === 0 ? hours + " " + dictionary.hour : hours + " " + dictionary.hour + " " + minutes + " " + dictionary.minute;
-          return trAmount + " " + trDirection;
+          return minutes === 0 ? hours + " saat" : hours + " saat " + minutes + " dakika";
         }
 
-        var direction = diff > 0 ? dictionary.ahead : dictionary.behind;
-        var amount = minutes === 0 ? hours + dictionary.hour : hours + dictionary.hour + " " + minutes + dictionary.minute;
-        return amount + " " + direction;
+        var hourText = hours + " " + (hours === 1 ? "hour" : "hours");
+        var minuteText = minutes + " " + (minutes === 1 ? "minute" : "minutes");
+        return minutes === 0 ? hourText : hourText + " " + minuteText;
+      }
+
+      function getLocalRelation(targetMinutes, localMinutes) {
+        var dictionary = texts();
+        var diff = targetMinutes - localMinutes;
+
+        if (diff === 0) {
+          return {
+            isSame: true,
+            label: "",
+            value: dictionary.sameZoneDirect || dictionary.sameZoneShort || dictionary.sameZone
+          };
+        }
+
+        return {
+          isSame: false,
+          label: diff > 0 ? dictionary.aheadOfYouLabel : dictionary.behindYouLabel,
+          value: formatTimeAmount(Math.abs(diff))
+        };
       }
 
       function getPhase(parts) {
@@ -2825,18 +2897,19 @@
           $card.find(".date").text(formatShortDate(parts));
           $card.find(".mobile-title-date").text(formatMonthDay(parts));
           var dictionary = texts();
-          var utcText = formatUtcOffset(offset);
-          var diffText = formatDiff(offset, localOffset);
-          var shortDiffText = diffText === dictionary.sameZone ? dictionary.sameZoneShort : diffText;
+          var localDateText = formatLocalDateRelation(parts, localParts);
+          var relation = getLocalRelation(offset, localOffset);
+          var relationLabelHtml = relation.label ? '<span class="pill-label">' + relation.label + '</span>' : '';
 
           $card.find(".utc-pill")
-            .attr("data-label", dictionary.timeZoneLabel)
-            .attr("data-value", utcText)
-            .html('<span class="pill-label">' + dictionary.timeZoneLabel + '</span><b class="pill-value">' + utcText + '</b>');
+            .attr("data-label", dictionary.localDateLabel)
+            .attr("data-value", localDateText)
+            .html('<span class="pill-label">' + dictionary.localDateLabel + '</span><b class="pill-value">' + localDateText + '</b>');
           $card.find(".diff-pill")
-            .attr("data-label", dictionary.localDiffLabel)
-            .attr("data-value", shortDiffText)
-            .html('<span class="pill-label">' + dictionary.localDiffLabel + '</span><b class="pill-value">' + diffText + '</b>');
+            .toggleClass("is-same", relation.isSame)
+            .attr("data-label", relation.label)
+            .attr("data-value", relation.value)
+            .html(relationLabelHtml + '<b class="pill-value">' + relation.value + '</b>');
           rotateHands($card, parts);
         });
       }
