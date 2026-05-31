@@ -1,8 +1,10 @@
-const CACHE_NAME = "world-clock-v14-6-12-mobile-standalone-bottom-fix";
+const CACHE_NAME = "world-clock-v14-6-15-language-switch";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
+  "./manifest-en.webmanifest",
+  "./manifest-tr.webmanifest",
   "./icon-192.png",
   "./icon-512.png",
   "./apple-touch-icon.png",

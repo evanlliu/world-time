@@ -10,7 +10,39 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>世界时钟</title>
 
-  <link rel="manifest" href="./manifest.webmanifest" />
+  <script>
+    (function () {
+      var language = (navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language || "zh-CN").toLowerCase();
+      var storedLanguage = "";
+      try {
+        storedLanguage = localStorage.getItem("worldClockLanguage") || "";
+      } catch (error) {}
+
+      var isChinese = language.indexOf("zh") === 0;
+      var isTurkish = language.indexOf("tr") === 0;
+      var detectedLanguageKey = isChinese ? "zh" : (isTurkish ? "tr" : "en");
+      var languageKey = /^(zh|en|tr)$/.test(storedLanguage) ? storedLanguage : detectedLanguageKey;
+      var titleMap = { zh: "世界时钟", en: "World Clock", tr: "Dünya Saati" };
+      var htmlLangMap = { zh: "zh-CN", en: "en", tr: "tr" };
+      var title = titleMap[languageKey];
+
+      window.__WORLD_CLOCK_DEFAULT_LANG__ = languageKey;
+      document.documentElement.lang = htmlLangMap[languageKey];
+      document.title = title;
+
+      var appleTitle = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+      if (appleTitle) {
+        appleTitle.setAttribute("content", title);
+      }
+
+      var manifestMap = { zh: "./manifest.webmanifest", en: "./manifest-en.webmanifest", tr: "./manifest-tr.webmanifest" };
+      var manifest = document.createElement("link");
+      manifest.id = "dynamicManifest";
+      manifest.rel = "manifest";
+      manifest.href = manifestMap[languageKey];
+      document.head.appendChild(manifest);
+    })();
+  </script>
   <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
   <link rel="icon" href="./icon-192.png" />
 
@@ -1320,7 +1352,7 @@
       }
 
       .card-pill.utc-pill::before {
-        content: "时区";
+        content: attr(data-label);
       }
 
       .card-pill.utc-pill::after {
@@ -1332,7 +1364,7 @@
       }
 
       .card-pill.diff-pill::before {
-        content: "相对本地";
+        content: attr(data-label);
       }
 
       .card-pill.diff-pill::after {
@@ -1488,6 +1520,62 @@
 
       .clock-card:not([data-id="local"]) .card-pill.diff-pill {
         min-width: 168px;
+      }
+    }
+
+    .language-fab {
+      position: fixed;
+      right: calc(22px + env(safe-area-inset-right));
+      bottom: calc(22px + env(safe-area-inset-bottom));
+      z-index: 30;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 10px 14px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .52);
+      color: var(--text);
+      box-shadow: 0 16px 36px rgba(45, 63, 112, .18), inset 0 1px 0 rgba(255,255,255,.62);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      font: inherit;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .language-fab:hover {
+      transform: translateY(-1px);
+      border-color: rgba(79, 124, 255, .28);
+      box-shadow: 0 18px 40px rgba(45, 63, 112, .22), inset 0 1px 0 rgba(255,255,255,.68);
+    }
+
+    .language-fab:active {
+      transform: scale(.96);
+    }
+
+    .language-fab-current {
+      font-size: 13px;
+      font-weight: 780;
+      letter-spacing: -.01em;
+    }
+
+    .language-fab-next {
+      padding-left: 8px;
+      border-left: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .language-fab {
+        background: rgba(14, 24, 48, .70);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, .34), inset 0 1px 0 rgba(255,255,255,.08);
       }
     }
 
@@ -1713,6 +1801,23 @@
       }
     }
 
+    @media (max-width: 860px) {
+      .language-fab {
+        right: calc(14px + env(safe-area-inset-right));
+        bottom: calc(14px + env(safe-area-inset-bottom));
+        min-height: 38px;
+        padding: 8px 12px;
+      }
+
+      .language-fab-current {
+        font-size: 12px;
+      }
+
+      .language-fab-next {
+        font-size: 11px;
+      }
+    }
+
     @media (max-width: 420px) {
       .app { padding:
           max(10px, env(safe-area-inset-top))
@@ -1792,6 +1897,11 @@
       </section>
     </section>
   </main>
+
+  <button class="language-fab" id="languageSwitch" type="button">
+    <span class="language-fab-current" id="languageSwitchCurrent">中</span>
+    <span class="language-fab-next" id="languageSwitchNext">EN</span>
+  </button>
 
   <template id="clockTemplate">
     <article class="clock-card">
@@ -1894,6 +2004,200 @@
 
       var localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
 
+      var I18N = {
+        zh: {
+          locale: "zh-CN",
+          htmlLang: "zh-CN",
+          title: "世界时钟",
+          switchLanguage: "切换语言",
+          today: "今天",
+          synced: "已同步",
+          timeZoneLabel: "时区",
+          localDiffLabel: "相对本地",
+          heroZonePrefix: "时区：",
+          cities: {
+            local: "当前位置",
+            monterrey: "蒙特雷",
+            beijing: "北京",
+            istanbul: "伊斯坦布尔"
+          },
+          countries: {
+            mexico: "墨西哥",
+            china: "中国",
+            turkey: "土耳其"
+          },
+          phases: {
+            early: "早上",
+            morning: "上午",
+            day: "下午",
+            night: "夜晚",
+            late: "深夜"
+          },
+          sameZone: "与本地时区一致",
+          sameZoneShort: "本地时区",
+          ahead: "快",
+          behind: "慢",
+          hour: "小时",
+          minute: "分"
+        },
+        en: {
+          locale: "en-US",
+          htmlLang: "en",
+          title: "World Clock",
+          switchLanguage: "Switch language",
+          today: "Today",
+          synced: "Synced",
+          timeZoneLabel: "Time zone",
+          localDiffLabel: "Local diff",
+          heroZonePrefix: "Time zone: ",
+          cities: {
+            local: "Current Location",
+            monterrey: "Monterrey",
+            beijing: "Beijing",
+            istanbul: "Istanbul"
+          },
+          countries: {
+            mexico: "Mexico",
+            china: "China",
+            turkey: "Turkey"
+          },
+          phases: {
+            early: "Early",
+            morning: "Morning",
+            day: "Afternoon",
+            night: "Night",
+            late: "Late Night"
+          },
+          sameZone: "Same as local time",
+          sameZoneShort: "Same zone",
+          ahead: "ahead",
+          behind: "behind",
+          hour: "h",
+          minute: "m",
+          months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        },
+        tr: {
+          locale: "tr-TR",
+          htmlLang: "tr",
+          title: "Dünya Saati",
+          switchLanguage: "Dili değiştir",
+          today: "Bugün",
+          synced: "Senkronize",
+          timeZoneLabel: "Saat dilimi",
+          localDiffLabel: "Yerel fark",
+          heroZonePrefix: "Saat dilimi: ",
+          cities: {
+            local: "Mevcut Konum",
+            monterrey: "Monterrey",
+            beijing: "Pekin",
+            istanbul: "İstanbul"
+          },
+          countries: {
+            mexico: "Meksika",
+            china: "Çin",
+            turkey: "Türkiye"
+          },
+          phases: {
+            early: "Sabah erken",
+            morning: "Sabah",
+            day: "Öğleden sonra",
+            night: "Gece",
+            late: "Gece geç"
+          },
+          sameZone: "Yerel saatle aynı",
+          sameZoneShort: "Yerel saat",
+          ahead: "ileri",
+          behind: "geri",
+          hour: "sa",
+          minute: "dk",
+          months: ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"]
+        }
+      };
+
+      function detectLanguage() {
+        var language = (navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language || "zh-CN").toLowerCase();
+        if (language.indexOf("zh") === 0) return "zh";
+        if (language.indexOf("tr") === 0) return "tr";
+        return "en";
+      }
+
+      var LANGUAGE_ORDER = ["zh", "en", "tr"];
+      var LANGUAGE_LABELS = {
+        zh: "中",
+        en: "EN",
+        tr: "TR"
+      };
+      var LANGUAGE_NAMES = {
+        zh: "中文",
+        en: "English",
+        tr: "Türkçe"
+      };
+      var MANIFEST_BY_LANGUAGE = {
+        zh: "./manifest.webmanifest",
+        en: "./manifest-en.webmanifest",
+        tr: "./manifest-tr.webmanifest"
+      };
+
+      var currentLang = /^(zh|en|tr)$/.test(window.__WORLD_CLOCK_DEFAULT_LANG__ || "") ? window.__WORLD_CLOCK_DEFAULT_LANG__ : detectLanguage();
+
+      function texts() {
+        return I18N[currentLang] || I18N.zh;
+      }
+
+      function getNextLanguage(lang) {
+        var index = LANGUAGE_ORDER.indexOf(lang);
+        return LANGUAGE_ORDER[(index + 1) % LANGUAGE_ORDER.length] || "zh";
+      }
+
+      function updateManifestLink() {
+        var manifest = document.getElementById("dynamicManifest") || document.querySelector('link[rel="manifest"]');
+        if (manifest) {
+          manifest.setAttribute("href", MANIFEST_BY_LANGUAGE[currentLang] || MANIFEST_BY_LANGUAGE.zh);
+        }
+      }
+
+      function updateLanguageButton() {
+        var dictionary = texts();
+        var nextLang = getNextLanguage(currentLang);
+        var label = dictionary.switchLanguage + "：" + LANGUAGE_NAMES[currentLang] + " → " + LANGUAGE_NAMES[nextLang];
+
+        $("#languageSwitch")
+          .attr("aria-label", label)
+          .attr("title", label);
+        $("#languageSwitchCurrent").text(LANGUAGE_LABELS[currentLang]);
+        $("#languageSwitchNext").text(LANGUAGE_LABELS[nextLang]);
+      }
+
+      function applyStaticLanguage() {
+        var dictionary = texts();
+        document.documentElement.lang = dictionary.htmlLang;
+        document.title = dictionary.title;
+        $(".shell").attr("aria-label", dictionary.title);
+        $(".content-title").text(dictionary.title);
+        updateManifestLink();
+        updateLanguageButton();
+
+        var appleTitle = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+        if (appleTitle) {
+          appleTitle.setAttribute("content", dictionary.title);
+        }
+      }
+
+      function setLanguage(languageKey, shouldSave) {
+        if (!I18N[languageKey] || languageKey === currentLang) return;
+        currentLang = languageKey;
+
+        if (shouldSave) {
+          try {
+            localStorage.setItem("worldClockLanguage", currentLang);
+          } catch (error) {}
+        }
+
+        applyStaticLanguage();
+        buildCards();
+        tick();
+      }
+
       function normalizeTimeZone(timeZone) {
         try {
           return new Intl.DateTimeFormat("en-US", { timeZone: timeZone }).resolvedOptions().timeZone || timeZone;
@@ -1905,29 +2209,28 @@
       var clocks = [
         {
           id: "local",
-          city: "当前位置",
-          country: prettyZone(localTimeZone),
+          cityKey: "local",
           timeZone: localTimeZone,
           tone: "local"
         },
         {
           id: "monterrey",
-          city: "蒙特雷",
-          country: "墨西哥",
+          cityKey: "monterrey",
+          countryKey: "mexico",
           timeZone: "America/Monterrey",
           tone: "monterrey"
         },
         {
           id: "beijing",
-          city: "北京",
-          country: "中国",
+          cityKey: "beijing",
+          countryKey: "china",
           timeZone: "Asia/Shanghai",
           tone: "beijing"
         },
         {
           id: "istanbul",
-          city: "伊斯坦布尔",
-          country: "土耳其",
+          cityKey: "istanbul",
+          countryKey: "turkey",
           timeZone: "Europe/Istanbul",
           tone: "istanbul"
         }
@@ -1960,14 +2263,14 @@
       }
 
       $("#miniZone").text(prettyZone(localTimeZone));
-      $("#heroZone").text("时区：" + prettyZone(localTimeZone));
+      $("#heroZone").text(texts().heroZonePrefix + prettyZone(localTimeZone));
 
       function pad(num) {
         return String(num).padStart(2, "0");
       }
 
       function getParts(date, timeZone) {
-        var formatter = new Intl.DateTimeFormat("zh-CN", {
+        var formatter = new Intl.DateTimeFormat(texts().locale, {
           timeZone: timeZone,
           hour12: false,
           year: "numeric",
@@ -2034,16 +2337,44 @@
         return pad(parts.hour) + ":" + pad(parts.minute);
       }
 
+      function localizedMonth(month) {
+        return texts().months[parseInt(month, 10) - 1] || month;
+      }
+
       function formatFullDate(parts) {
-        return parts.year + "年" + parts.month + "月" + parts.day + "日 · " + parts.weekday;
+        if (currentLang === "zh") {
+          return parts.year + "年" + parts.month + "月" + parts.day + "日 · " + parts.weekday;
+        }
+
+        if (currentLang === "tr") {
+          return parseInt(parts.day, 10) + " " + localizedMonth(parts.month) + " " + parts.year + " · " + parts.weekday;
+        }
+
+        return localizedMonth(parts.month) + " " + parseInt(parts.day, 10) + ", " + parts.year + " · " + parts.weekday;
       }
 
       function formatShortDate(parts) {
-        return parts.month + "月" + parts.day + "日 · " + parts.weekday;
+        if (currentLang === "zh") {
+          return parts.month + "月" + parts.day + "日 · " + parts.weekday;
+        }
+
+        if (currentLang === "tr") {
+          return parseInt(parts.day, 10) + " " + localizedMonth(parts.month) + " · " + parts.weekday;
+        }
+
+        return localizedMonth(parts.month) + " " + parseInt(parts.day, 10) + " · " + parts.weekday;
       }
 
       function formatMonthDay(parts) {
-        return parts.month + "月" + parts.day + "日";
+        if (currentLang === "zh") {
+          return parts.month + "月" + parts.day + "日";
+        }
+
+        if (currentLang === "tr") {
+          return parseInt(parts.day, 10) + " " + localizedMonth(parts.month);
+        }
+
+        return localizedMonth(parts.month) + " " + parseInt(parts.day, 10);
       }
 
       function formatUtcOffset(minutes) {
@@ -2053,24 +2384,39 @@
       }
 
       function formatDiff(targetMinutes, localMinutes) {
+        var dictionary = texts();
         var diff = targetMinutes - localMinutes;
-        if (diff === 0) return "与本地时区一致";
+        if (diff === 0) return dictionary.sameZone;
 
-        var sign = diff > 0 ? "快" : "慢";
         var abs = Math.abs(diff);
         var hours = Math.floor(abs / 60);
         var minutes = abs % 60;
 
-        return minutes === 0 ? sign + hours + "小时" : sign + hours + "小时" + minutes + "分";
+        if (currentLang === "zh") {
+          var sign = diff > 0 ? dictionary.ahead : dictionary.behind;
+          return minutes === 0 ? sign + hours + dictionary.hour : sign + hours + dictionary.hour + minutes + dictionary.minute;
+        }
+
+        if (currentLang === "tr") {
+          var trDirection = diff > 0 ? dictionary.ahead : dictionary.behind;
+          var trAmount = minutes === 0 ? hours + " " + dictionary.hour : hours + " " + dictionary.hour + " " + minutes + " " + dictionary.minute;
+          return trAmount + " " + trDirection;
+        }
+
+        var direction = diff > 0 ? dictionary.ahead : dictionary.behind;
+        var amount = minutes === 0 ? hours + dictionary.hour : hours + dictionary.hour + " " + minutes + dictionary.minute;
+        return amount + " " + direction;
       }
 
       function getPhase(parts) {
         var hour = parts.hour;
-        if (hour >= 5 && hour < 9) return { key: "early", label: "早上" };
-        if (hour >= 9 && hour < 12) return { key: "morning", label: "上午" };
-        if (hour >= 12 && hour < 18) return { key: "day", label: "下午" };
-        if (hour >= 18 && hour < 23) return { key: "night", label: "夜晚" };
-        return { key: "late", label: "深夜" };
+        var phaseKey = "late";
+        if (hour >= 5 && hour < 9) phaseKey = "early";
+        else if (hour >= 9 && hour < 12) phaseKey = "morning";
+        else if (hour >= 12 && hour < 18) phaseKey = "day";
+        else if (hour >= 18 && hour < 23) phaseKey = "night";
+
+        return { key: phaseKey, label: texts().phases[phaseKey] };
       }
 
       function rotateHands($card, parts) {
@@ -2094,8 +2440,10 @@
           $card.attr("data-id", clock.id);
           $card.attr("data-tz", clock.timeZone);
           $card.attr("data-tone", clock.tone);
-          $card.find(".city").text(clock.city);
-          $card.find(".country").text(clock.country);
+          var dictionary = texts();
+          var country = clock.id === "local" ? prettyZone(localTimeZone) : dictionary.countries[clock.countryKey];
+          $card.find(".city").text(dictionary.cities[clock.cityKey]);
+          $card.find(".country").text(country);
           $grid.append($card);
         });
       }
@@ -2110,10 +2458,10 @@
 
         $("#heroTime").text(formatTime(localParts));
         $("#heroDate").text(formatFullDate(localParts));
-        $("#heroZone").text("时区：" + prettyZone(localTimeZone));
+        $("#heroZone").text(texts().heroZonePrefix + prettyZone(localTimeZone));
         $("#miniUtc").text(formatUtcOffset(localOffset));
         $("#lastSync").text(formatTime(localParts));
-        $("#contentMeta").text("今天 · " + formatFullDate(localParts) + " · 已同步");
+        $("#contentMeta").text(texts().today + " · " + formatFullDate(localParts) + " · " + texts().synced);
 
         $(".clock-card").each(function () {
           var $card = $(this);
@@ -2129,16 +2477,28 @@
           $card.find(".time").text(formatTime(parts));
           $card.find(".date").text(formatShortDate(parts));
           $card.find(".mobile-title-date").text(formatMonthDay(parts));
+          var dictionary = texts();
           var utcText = formatUtcOffset(offset);
           var diffText = formatDiff(offset, localOffset);
-          var shortDiffText = diffText === "与本地时区一致" ? "本地时区" : diffText;
+          var shortDiffText = diffText === dictionary.sameZone ? dictionary.sameZoneShort : diffText;
 
-          $card.find(".utc-pill").attr("data-value", utcText).html("<span>时区</span> " + utcText);
-          $card.find(".diff-pill").attr("data-value", shortDiffText).html("<span>相对本地</span> " + diffText);
+          $card.find(".utc-pill")
+            .attr("data-label", dictionary.timeZoneLabel)
+            .attr("data-value", utcText)
+            .html("<span>" + dictionary.timeZoneLabel + "</span> " + utcText);
+          $card.find(".diff-pill")
+            .attr("data-label", dictionary.localDiffLabel)
+            .attr("data-value", shortDiffText)
+            .html("<span>" + dictionary.localDiffLabel + "</span> " + diffText);
           rotateHands($card, parts);
         });
       }
 
+      $("#languageSwitch").on("click", function () {
+        setLanguage(getNextLanguage(currentLang), true);
+      });
+
+      applyStaticLanguage();
       buildCards();
       tick();
       setInterval(tick, 1000);
