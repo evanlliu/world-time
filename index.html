@@ -876,6 +876,10 @@
       text-overflow: ellipsis;
     }
 
+    .mobile-title-meta {
+      display: none;
+    }
+
     .badge-group {
       display: flex;
       flex-wrap: wrap;
@@ -1556,7 +1560,18 @@
         gap: 14px;
       }
       .city { font-size: 24px; }
-      .country { font-size: 13px; margin-top: 6px; }
+      .city-group {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 4px 8px;
+        width: 100%;
+      }
+      .country {
+        flex: 0 0 100%;
+        font-size: 13px;
+        margin-top: 0;
+      }
       .card-main,
       .clock-card[data-id="local"] .card-main {
         grid-template-columns: 1fr 108px;
@@ -1572,6 +1587,32 @@
       .date { margin-top: 10px; font-size: 13px; }
       .badge-group { justify-content: flex-start; }
       .card-top { flex-direction: column; align-items: flex-start; }
+
+      .card-top > .badge-group,
+      .time-block > .date {
+        display: none;
+      }
+
+      .mobile-title-meta {
+        display: inline-flex;
+        flex: 0 0 auto;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 6px;
+        margin-top: 0;
+        white-space: nowrap;
+      }
+
+      .mobile-title-date {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1;
+        white-space: nowrap;
+      }
+
+      .mobile-title-meta .chip {
+        flex: 0 0 auto;
+      }
 
       .clock-card:not([data-id="local"]) .card-bottom {
         width: fit-content;
@@ -1669,6 +1710,11 @@
       <div class="card-top">
         <div class="city-group">
           <h3 class="city"></h3>
+          <div class="mobile-title-meta">
+            <span class="mobile-title-date"></span>
+            <span class="chip weekday mobile-weekday"></span>
+            <span class="chip phase mobile-phase"><span class="phase-icon"></span><span class="phase-text"></span></span>
+          </div>
           <div class="country"></div>
         </div>
         <div class="badge-group">
@@ -1886,6 +1932,10 @@
         return parts.month + "月" + parts.day + "日 · " + parts.weekday;
       }
 
+      function formatMonthDay(parts) {
+        return parts.month + "月" + parts.day + "日";
+      }
+
       function formatUtcOffset(minutes) {
         var sign = minutes >= 0 ? "+" : "-";
         var abs = Math.abs(minutes);
@@ -1968,6 +2018,7 @@
           $card.find(".phase-text").text(phase.label);
           $card.find(".time").text(formatTime(parts));
           $card.find(".date").text(formatShortDate(parts));
+          $card.find(".mobile-title-date").text(formatMonthDay(parts));
           var utcText = formatUtcOffset(offset);
           var diffText = formatDiff(offset, localOffset);
           var shortDiffText = diffText === "与本地时区一致" ? "本地时区" : diffText;
