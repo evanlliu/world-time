@@ -1721,7 +1721,7 @@
 
     @media (max-width: 860px) {
       :root {
-        --mobile-shell-extra-height: 72px;
+        --mobile-shell-extra-height: 500px;
       }
 
       html, body {
@@ -1729,10 +1729,9 @@
         min-height: 100vh;
         min-height: var(--app-height);
         min-height: 100dvh;
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: hidden;
         overscroll-behavior: none;
-        touch-action: pan-y;
+        touch-action: none;
         background-color: var(--page-grad-2);
       }
 
@@ -1765,7 +1764,8 @@
         min-height: 100vh;
         min-height: var(--app-height);
         min-height: 100dvh;
-        overflow: visible;
+        overflow: hidden;
+        touch-action: none;
         padding:
           max(12px, env(safe-area-inset-top))
           max(12px, env(safe-area-inset-right))
@@ -2161,6 +2161,12 @@
             event.preventDefault();
           }, { passive: false });
         });
+
+        document.addEventListener("touchmove", function (event) {
+          if (!window.matchMedia || window.matchMedia("(max-width: 860px)").matches) {
+            event.preventDefault();
+          }
+        }, { passive: false });
       }
 
       lockMobileGestures();
@@ -2183,6 +2189,95 @@
 
       function prettyZone(zone) {
         return (zone || "UTC").replace(/_/g, " ");
+      }
+
+      var LOCAL_TIME_ZONE_PLACES = {
+        "America/Monterrey": {
+          zh: "蒙特雷，墨西哥",
+          en: "Monterrey, Mexico",
+          tr: "Monterrey, Meksika"
+        },
+        "America/Mexico_City": {
+          zh: "墨西哥城，墨西哥",
+          en: "Mexico City, Mexico",
+          tr: "Meksiko, Meksika"
+        },
+        "America/Cancun": {
+          zh: "坎昆，墨西哥",
+          en: "Cancun, Mexico",
+          tr: "Cancún, Meksika"
+        },
+        "America/Tijuana": {
+          zh: "蒂华纳，墨西哥",
+          en: "Tijuana, Mexico",
+          tr: "Tijuana, Meksika"
+        },
+        "America/Mazatlan": {
+          zh: "马萨特兰，墨西哥",
+          en: "Mazatlan, Mexico",
+          tr: "Mazatlán, Meksika"
+        },
+        "America/Chihuahua": {
+          zh: "奇瓦瓦，墨西哥",
+          en: "Chihuahua, Mexico",
+          tr: "Chihuahua, Meksika"
+        },
+        "America/Merida": {
+          zh: "梅里达，墨西哥",
+          en: "Merida, Mexico",
+          tr: "Mérida, Meksika"
+        },
+        "Asia/Shanghai": {
+          zh: "上海，中国",
+          en: "Shanghai, China",
+          tr: "Şanghay, Çin"
+        },
+        "Asia/Chongqing": {
+          zh: "重庆，中国",
+          en: "Chongqing, China",
+          tr: "Çongçing, Çin"
+        },
+        "Asia/Harbin": {
+          zh: "哈尔滨，中国",
+          en: "Harbin, China",
+          tr: "Harbin, Çin"
+        },
+        "Asia/Urumqi": {
+          zh: "乌鲁木齐，中国",
+          en: "Urumqi, China",
+          tr: "Urumçi, Çin"
+        },
+        "Europe/Istanbul": {
+          zh: "伊斯坦布尔，土耳其",
+          en: "Istanbul, Turkey",
+          tr: "İstanbul, Türkiye"
+        },
+        "Asia/Istanbul": {
+          zh: "伊斯坦布尔，土耳其",
+          en: "Istanbul, Turkey",
+          tr: "İstanbul, Türkiye"
+        },
+        "UTC": {
+          zh: "协调世界时",
+          en: "Coordinated Universal Time",
+          tr: "Eşgüdümlü Evrensel Zaman"
+        },
+        "Etc/UTC": {
+          zh: "协调世界时",
+          en: "Coordinated Universal Time",
+          tr: "Eşgüdümlü Evrensel Zaman"
+        }
+      };
+
+      function getLocalPlaceLabel(timeZone) {
+        var normalizedZone = normalizeTimeZone(timeZone);
+        var place = LOCAL_TIME_ZONE_PLACES[normalizedZone] || LOCAL_TIME_ZONE_PLACES[timeZone];
+
+        if (place && place[currentLang]) {
+          return place[currentLang];
+        }
+
+        return prettyZone(normalizedZone || timeZone);
       }
 
       function getGlobalPhaseForPage(phaseKey) {
@@ -2488,7 +2583,7 @@
         });
       }
 
-      $("#miniZone").text(prettyZone(localTimeZone));
+      $("#miniZone").text(getLocalPlaceLabel(localTimeZone));
       $("#heroZone").text(texts().heroZonePrefix + prettyZone(localTimeZone));
 
       function pad(num) {
@@ -2667,7 +2762,7 @@
           $card.attr("data-tz", clock.timeZone);
           $card.attr("data-tone", clock.tone);
           var dictionary = texts();
-          var country = clock.id === "local" ? prettyZone(localTimeZone) : dictionary.countries[clock.countryKey];
+          var country = clock.id === "local" ? getLocalPlaceLabel(localTimeZone) : dictionary.countries[clock.countryKey];
           $card.find(".city").text(dictionary.cities[clock.cityKey]);
           $card.find(".country").text(country);
           $grid.append($card);
