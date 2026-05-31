@@ -2313,19 +2313,19 @@
           tr: "Mérida, Meksika"
         },
         "Asia/Shanghai": {
-          zh: "上海，中国",
-          en: "Shanghai, China",
-          tr: "Şanghay, Çin"
+          zh: "中国标准时间",
+          en: "China Standard Time",
+          tr: "Çin Standart Saati"
         },
         "Asia/Chongqing": {
-          zh: "重庆，中国",
-          en: "Chongqing, China",
-          tr: "Çongçing, Çin"
+          zh: "中国标准时间",
+          en: "China Standard Time",
+          tr: "Çin Standart Saati"
         },
         "Asia/Harbin": {
-          zh: "哈尔滨，中国",
-          en: "Harbin, China",
-          tr: "Harbin, Çin"
+          zh: "中国标准时间",
+          en: "China Standard Time",
+          tr: "Çin Standart Saati"
         },
         "Asia/Urumqi": {
           zh: "乌鲁木齐，中国",
@@ -2363,6 +2363,135 @@
         }
 
         return prettyZone(normalizedZone || timeZone);
+      }
+
+
+      var preciseLocalPlace = {
+        isLoading: false,
+        hasRequested: false,
+        coords: null,
+        labels: {}
+      };
+
+      function getReverseGeoLanguage(languageKey) {
+        if (languageKey === "zh") return "zh";
+        if (languageKey === "tr") return "tr";
+        return "en";
+      }
+
+      function pickReverseGeoCity(data) {
+        var localityInfo = data && data.localityInfo;
+        var administrative = localityInfo && localityInfo.administrative ? localityInfo.administrative : [];
+        var informative = localityInfo && localityInfo.informative ? localityInfo.informative : [];
+        var candidates = [
+          data && data.city,
+          data && data.locality,
+          data && data.principalSubdivision,
+          data && data.localityName
+        ];
+
+        administrative.concat(informative).forEach(function (item) {
+          if (!item || !item.name) return;
+          var order = typeof item.order === "number" ? item.order : 999;
+          if (order >= 4 && order <= 8) candidates.push(item.name);
+        });
+
+        for (var i = 0; i < candidates.length; i += 1) {
+          var value = (candidates[i] || "").trim();
+          if (value) return value;
+        }
+
+        return "";
+      }
+
+      function formatPrecisePlace(data, languageKey) {
+        var city = pickReverseGeoCity(data);
+        var country = ((data && data.countryName) || "").trim();
+
+        if (city && country && city !== country) {
+          return city + (languageKey === "zh" ? "，" : ", ") + country;
+        }
+
+        return city || country || "";
+      }
+
+      function getCurrentLocalPlaceLabel() {
+        if (preciseLocalPlace.labels[currentLang]) {
+          return preciseLocalPlace.labels[currentLang];
+        }
+
+        if (preciseLocalPlace.isLoading) {
+          return texts().locatingPlace;
+        }
+
+        return getLocalPlaceLabel(localTimeZone);
+      }
+
+      function updateLocalPlaceLabel() {
+        var label = getCurrentLocalPlaceLabel();
+        $("#miniZone").text(label);
+        $(".clock-card[data-id='local'] .country").text(label);
+      }
+
+      function reversePreciseLocalPlace(languageKey) {
+        if (!preciseLocalPlace.coords) return;
+
+        var targetLang = languageKey || currentLang;
+        preciseLocalPlace.isLoading = true;
+        updateLocalPlaceLabel();
+
+        var coords = preciseLocalPlace.coords;
+        var geoLanguage = getReverseGeoLanguage(targetLang);
+        var url = "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" +
+          encodeURIComponent(coords.latitude) +
+          "&longitude=" + encodeURIComponent(coords.longitude) +
+          "&localityLanguage=" + encodeURIComponent(geoLanguage);
+
+        fetch(url)
+          .then(function (response) {
+            if (!response.ok) throw new Error("reverse geocode failed");
+            return response.json();
+          })
+          .then(function (data) {
+            var label = formatPrecisePlace(data, targetLang);
+            if (label) {
+              preciseLocalPlace.labels[targetLang] = label;
+            }
+          })
+          .catch(function () {})
+          .finally(function () {
+            preciseLocalPlace.isLoading = false;
+            updateLocalPlaceLabel();
+          });
+      }
+
+      function requestPreciseLocalPlace() {
+        if (preciseLocalPlace.hasRequested || !("geolocation" in navigator)) {
+          return;
+        }
+
+        preciseLocalPlace.hasRequested = true;
+        preciseLocalPlace.isLoading = true;
+        updateLocalPlaceLabel();
+
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            preciseLocalPlace.coords = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            };
+            reversePreciseLocalPlace(currentLang);
+          },
+          function () {
+            preciseLocalPlace.isLoading = false;
+            updateLocalPlaceLabel();
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 600000
+          }
+        );
       }
 
       function getGlobalPhaseForPage(phaseKey) {
@@ -2418,6 +2547,7 @@
           aheadOfYouLabel: "比你快",
           behindYouLabel: "比你慢",
           sameZoneDirect: "同一时区",
+          locatingPlace: "正在获取实际位置…",
           heroZonePrefix: "时区：",
           cities: {
             local: "当前位置",
@@ -2460,6 +2590,7 @@
           aheadOfYouLabel: "Ahead of you",
           behindYouLabel: "Behind you",
           sameZoneDirect: "Same time zone",
+          locatingPlace: "Getting current location…",
           heroZonePrefix: "Time zone: ",
           cities: {
             local: "Current Location",
@@ -2503,6 +2634,7 @@
           aheadOfYouLabel: "Senden ileride",
           behindYouLabel: "Senden geride",
           sameZoneDirect: "Aynı saat dilimi",
+          locatingPlace: "Mevcut konum alınıyor…",
           heroZonePrefix: "Saat dilimi: ",
           cities: {
             local: "Mevcut konum",
@@ -2623,6 +2755,12 @@
         applyStaticLanguage();
         buildCards();
         tick();
+
+        if (preciseLocalPlace.coords && !preciseLocalPlace.labels[currentLang]) {
+          reversePreciseLocalPlace(currentLang);
+        } else {
+          updateLocalPlaceLabel();
+        }
       }
 
       function normalizeTimeZone(timeZone) {
@@ -2689,7 +2827,7 @@
         });
       }
 
-      $("#miniZone").text(getLocalPlaceLabel(localTimeZone));
+      $("#miniZone").text(getCurrentLocalPlaceLabel());
       $("#heroZone").text(texts().heroZonePrefix + prettyZone(localTimeZone));
 
       function pad(num) {
@@ -2894,7 +3032,7 @@
           $card.attr("data-tz", clock.timeZone);
           $card.attr("data-tone", clock.tone);
           var dictionary = texts();
-          var country = clock.id === "local" ? getLocalPlaceLabel(localTimeZone) : dictionary.countries[clock.countryKey];
+          var country = clock.id === "local" ? getCurrentLocalPlaceLabel() : dictionary.countries[clock.countryKey];
           $card.find(".city").text(dictionary.cities[clock.cityKey]);
           $card.find(".country").text(country);
           $grid.append($card);
@@ -2975,6 +3113,7 @@
       applyStaticLanguage();
       buildCards();
       tick();
+      requestPreciseLocalPlace();
       setInterval(tick, 1000);
 
       if (mobileLayoutQuery) {
