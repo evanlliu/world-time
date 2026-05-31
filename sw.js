@@ -1,13 +1,13 @@
-const CACHE_NAME = "world-clock-v14-6-26-icon-light-optimized";
+const CACHE_NAME = "world-clock-v14-6-27-versioned-icon";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./manifest-en.webmanifest",
   "./manifest-tr.webmanifest",
-  "./icon-192.png",
-  "./icon-512.png",
-  "./apple-touch-icon.png",
+  "./icon-192-v14627.png",
+  "./icon-512-v14627.png",
+  "./apple-touch-icon-v14627.png",
   "https://code.jquery.com/jquery-3.7.1.min.js"
 ];
 
