@@ -2121,13 +2121,25 @@
         return (zone || "UTC").replace(/_/g, " ");
       }
 
+      function getGlobalPhaseForPage(phaseKey) {
+        var pagePhaseMap = {
+          early: "early",
+          morning: "morning",
+          day: "day",
+          night: "morning",
+          late: "early"
+        };
+
+        return pagePhaseMap[phaseKey] || "morning";
+      }
+
       function applyGlobalPhase(phaseKey) {
         var themeMap = {
           early: "#f7efe3",
           morning: "#eef6f1",
           day: "#fff1e7",
-          night: "#dfe6f6",
-          late: "#c4cede"
+          night: "#eef6f1",
+          late: "#f7efe3"
         };
 
         document.documentElement.setAttribute("data-app-phase", phaseKey);
@@ -2189,7 +2201,7 @@
           today: "Today",
           synced: "Synced",
           timeZoneLabel: "Time zone",
-          localDiffLabel: "Local diff",
+          localDiffLabel: "Relative to local",
           heroZonePrefix: "Time zone: ",
           cities: {
             local: "Current Location",
@@ -2203,14 +2215,14 @@
             turkey: "Turkey"
           },
           phases: {
-            early: "Early",
+            early: "Early morning",
             morning: "Morning",
             day: "Afternoon",
             night: "Night",
-            late: "Late Night"
+            late: "Late night"
           },
-          sameZone: "Same as local time",
-          sameZoneShort: "Same zone",
+          sameZone: "Same as local time zone",
+          sameZoneShort: "Local time zone",
           ahead: "ahead",
           behind: "behind",
           hour: "h",
@@ -2223,12 +2235,12 @@
           title: "Dünya Saati",
           switchLanguage: "Dili değiştir",
           today: "Bugün",
-          synced: "Senkronize",
+          synced: "Senkronize edildi",
           timeZoneLabel: "Saat dilimi",
-          localDiffLabel: "Yerel fark",
+          localDiffLabel: "Yerel saate göre",
           heroZonePrefix: "Saat dilimi: ",
           cities: {
-            local: "Mevcut Konum",
+            local: "Mevcut konum",
             monterrey: "Monterrey",
             beijing: "Pekin",
             istanbul: "İstanbul"
@@ -2239,16 +2251,16 @@
             turkey: "Türkiye"
           },
           phases: {
-            early: "Sabah erken",
+            early: "Erken sabah",
             morning: "Sabah",
             day: "Öğleden sonra",
             night: "Gece",
             late: "Gece geç"
           },
-          sameZone: "Yerel saatle aynı",
-          sameZoneShort: "Yerel saat",
-          ahead: "ileri",
-          behind: "geri",
+          sameZone: "Yerel saat dilimiyle aynı",
+          sameZoneShort: "Yerel saat dilimi",
+          ahead: "ileride",
+          behind: "geride",
           hour: "sa",
           minute: "dk",
           months: ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"]
@@ -2604,7 +2616,7 @@
         var localParts = getParts(now, localTimeZone);
         var localPhase = getPhase(localParts);
 
-        applyGlobalPhase(localPhase.key);
+        applyGlobalPhase(getGlobalPhaseForPage(localPhase.key));
 
         $("#heroTime").text(formatTime(localParts));
         $("#heroDate").text(formatFullDate(localParts));
