@@ -1425,29 +1425,6 @@
         min-width: 0;
       }
 
-      /* 让下方三个固定城市卡片的小标签按内容自适应宽度，
-         与“当前位置”卡片的时区/相对本地标签保持一致。 */
-      .clock-card:not([data-id="local"]) .card-bottom {
-        display: flex;
-        flex-wrap: wrap;
-        width: fit-content;
-        max-width: 100%;
-        align-items: center;
-        justify-items: start;
-      }
-
-      .clock-card:not([data-id="local"]) .card-pill {
-        width: auto;
-        flex: 0 0 auto;
-      }
-
-      .clock-card:not([data-id="local"]) .card-pill::before {
-        width: auto;
-      }
-
-      .clock-card:not([data-id="local"]) .card-pill::after {
-        flex: 0 1 auto;
-      }
     }
 
     @media (max-width: 1024px) {
@@ -1562,6 +1539,20 @@
       .date { margin-top: 10px; font-size: 13px; }
       .badge-group { justify-content: flex-start; }
       .card-top { flex-direction: column; align-items: flex-start; }
+
+      .clock-card:not([data-id="local"]) .card-bottom {
+        width: fit-content;
+        max-width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill {
+        width: auto;
+        flex: 0 0 auto;
+        max-width: 100%;
+      }
     }
 
     @media (max-width: 420px) {
@@ -1714,6 +1705,14 @@
 
       var localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
 
+      function normalizeTimeZone(timeZone) {
+        try {
+          return new Intl.DateTimeFormat("en-US", { timeZone: timeZone }).resolvedOptions().timeZone || timeZone;
+        } catch (error) {
+          return timeZone;
+        }
+      }
+
       var clocks = [
         {
           id: "local",
@@ -1745,7 +1744,32 @@
         }
       ];
 
-      $("#cityCount").text(clocks.length);
+      var mobileLayoutQuery = window.matchMedia ? window.matchMedia("(max-width: 1024px)") : null;
+
+      function isMobileLayout() {
+        return mobileLayoutQuery ? mobileLayoutQuery.matches : false;
+      }
+
+      function isSameLocalMinute(date, timeZone) {
+        var localParts = getParts(date, localTimeZone);
+        var targetParts = getParts(date, timeZone);
+
+        return localParts.year === targetParts.year &&
+          localParts.month === targetParts.month &&
+          localParts.day === targetParts.day &&
+          localParts.hour === targetParts.hour &&
+          localParts.minute === targetParts.minute;
+      }
+
+      function getVisibleClocks(date) {
+        if (!isMobileLayout()) return clocks;
+
+        return clocks.filter(function (clock) {
+          if (clock.id === "local") return true;
+          return !isSameLocalMinute(date, clock.timeZone);
+        });
+      }
+
       $("#miniZone").text(prettyZone(localTimeZone));
       $("#heroZone").text("时区：" + prettyZone(localTimeZone));
 
@@ -1867,8 +1891,12 @@
       function buildCards() {
         var template = $("#clockTemplate").html();
         var $grid = $("#clockGrid");
+        var visibleClocks = getVisibleClocks(new Date());
 
-        clocks.forEach(function (clock) {
+        $grid.empty();
+        $("#cityCount").text(visibleClocks.length);
+
+        visibleClocks.forEach(function (clock) {
           var $card = $(template);
           $card.attr("data-id", clock.id);
           $card.attr("data-tz", clock.timeZone);
@@ -1920,6 +1948,19 @@
       buildCards();
       tick();
       setInterval(tick, 1000);
+
+      if (mobileLayoutQuery) {
+        var handleLayoutChange = function () {
+          buildCards();
+          tick();
+        };
+
+        if (mobileLayoutQuery.addEventListener) {
+          mobileLayoutQuery.addEventListener("change", handleLayoutChange);
+        } else if (mobileLayoutQuery.addListener) {
+          mobileLayoutQuery.addListener(handleLayoutChange);
+        }
+      }
 
       if ("serviceWorker" in navigator && location.protocol === "https:") {
         navigator.serviceWorker.register("./sw.js").catch(function () {});
