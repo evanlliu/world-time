@@ -1,4 +1,4 @@
-const CACHE_NAME = "world-clock-v14-6-27-versioned-icon";
+const CACHE_NAME = "world-clock-v14-6-28-phase-color-logic";
 const APP_SHELL = [
   "./",
   "./index.html",
