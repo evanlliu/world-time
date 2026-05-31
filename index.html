@@ -744,6 +744,7 @@
     }
 
     .clock-card[data-tone="local"] { --tone-a: #41d9a9; --tone-b: #55c5ff; --tone-c: rgba(85,197,255,.22); }
+    .clock-card[data-tone="monterrey"] { --tone-a: #41d9a9; --tone-b: #55c5ff; --tone-c: rgba(85,197,255,.22); }
     .clock-card[data-tone="beijing"] { --tone-a: #ffab4d; --tone-b: #ffd76e; --tone-c: rgba(255,171,77,.22); }
     .clock-card[data-tone="istanbul"] { --tone-a: #8a7dff; --tone-b: #ff8db4; --tone-c: rgba(138,125,255,.22); }
 
@@ -1197,6 +1198,14 @@
       .hero-title {
         display: none;
       }
+
+      .clock-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .clock-card[data-id="local"] {
+        grid-column: 1 / -1;
+      }
     }
 
     @media (min-width: 861px) {
@@ -1299,11 +1308,145 @@
         content: attr(data-value);
       }
 
+      @media (min-width: 1025px) {
+        .clock-card:not([data-id="local"]) {
+          padding-bottom: 92px;
+        }
+
+        .clock-card:not([data-id="local"]) .card-bottom {
+          position: absolute;
+          left: 18px;
+          right: auto;
+          bottom: 16px;
+          width: min(230px, calc(100% - 36px));
+          max-width: calc(100% - 36px);
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 6px;
+          margin-top: 0;
+          align-items: stretch;
+        }
+
+        .clock-card:not([data-id="local"]) .card-pill {
+          width: 100%;
+          min-width: 0;
+          min-height: 29px;
+          padding: 7px 11px;
+        }
+
+        .clock-card:not([data-id="local"]) .card-pill::before {
+          width: 52px;
+          margin-right: 8px;
+          font-size: 10.5px;
+        }
+
+        .clock-card:not([data-id="local"]) .card-pill::after {
+          flex: 1 1 auto;
+          font-size: 12.5px;
+        }
+
+        .clock-card:not([data-id="local"]) .card-pill.utc-pill,
+        .clock-card:not([data-id="local"]) .card-pill.diff-pill {
+          min-width: 0;
+        }
+      }
+
       @media (prefers-color-scheme: dark) {
         .card-pill {
           background: rgba(255,255,255,.075);
           border-color: rgba(255,255,255,.10);
         }
+      }
+    }
+
+    @media (min-width: 1025px) {
+      .clock-card:not([data-id="local"]) {
+        padding: 18px;
+        padding-bottom: 18px;
+      }
+
+      .clock-card:not([data-id="local"]) .card-main {
+        grid-template-columns: minmax(0, 1fr) 132px;
+        gap: 10px;
+        align-items: center;
+        margin-top: 2px;
+      }
+
+      .clock-card:not([data-id="local"]) .time-block {
+        transform: translateY(-12px);
+      }
+
+      .clock-card:not([data-id="local"]) .time {
+        font-size: clamp(44px, 4.2vw, 62px);
+      }
+
+      .clock-card:not([data-id="local"]) .date {
+        margin-top: 8px;
+      }
+
+      .clock-card:not([data-id="local"]) .dial {
+        width: 132px;
+        justify-self: end;
+        align-self: center;
+        transform: translateY(-10px);
+      }
+
+      .clock-card:not([data-id="local"]) .card-bottom {
+        position: static;
+        width: min(230px, 100%);
+        max-width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 6px;
+        margin-top: 15px;
+        align-items: stretch;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill {
+        width: 100%;
+        min-width: 0;
+        min-height: 28px;
+        padding: 6px 10px;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill::before {
+        width: 52px;
+        margin-right: 8px;
+        font-size: 10.5px;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill::after {
+        flex: 1 1 auto;
+        font-size: 12.5px;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill.utc-pill,
+      .clock-card:not([data-id="local"]) .card-pill.diff-pill {
+        min-width: 0;
+      }
+
+      /* 让下方三个固定城市卡片的小标签按内容自适应宽度，
+         与“当前位置”卡片的时区/相对本地标签保持一致。 */
+      .clock-card:not([data-id="local"]) .card-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        width: fit-content;
+        max-width: 100%;
+        align-items: center;
+        justify-items: start;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill {
+        width: auto;
+        flex: 0 0 auto;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill::before {
+        width: auto;
+      }
+
+      .clock-card:not([data-id="local"]) .card-pill::after {
+        flex: 0 1 auto;
       }
     }
 
@@ -1393,9 +1536,7 @@
 
       .content-shell { padding: 14px; }
       .content-head {
-        padding: 2px 2px 6px;
-        flex-direction: column;
-        align-items: flex-start;
+        display: none;
       }
       .content-meta { text-align: left; }
       .clock-grid { grid-template-columns: 1fr; gap: 12px; }
@@ -1580,6 +1721,13 @@
           country: prettyZone(localTimeZone),
           timeZone: localTimeZone,
           tone: "local"
+        },
+        {
+          id: "monterrey",
+          city: "蒙特雷",
+          country: "墨西哥",
+          timeZone: "America/Monterrey",
+          tone: "monterrey"
         },
         {
           id: "beijing",

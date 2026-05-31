@@ -1,4 +1,4 @@
-const CACHE_NAME = "world-clock-v14-1-ios-fix";
+const CACHE_NAME = "world-clock-v14-6-1-pc-up";
 const APP_SHELL = [
   "./",
   "./index.html",
