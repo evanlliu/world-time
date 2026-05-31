@@ -1523,19 +1523,28 @@
       }
     }
 
-    .language-fab {
+    .language-float {
       position: fixed;
       right: calc(22px + env(safe-area-inset-right));
       bottom: calc(22px + env(safe-area-inset-bottom));
       z-index: 30;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .language-fab {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      min-height: 42px;
-      padding: 10px 14px;
+      min-width: 46px;
+      min-height: 46px;
+      padding: 10px 13px;
       border: 1px solid var(--line-strong);
       border-radius: 999px;
-      background: rgba(255, 255, 255, .52);
+      background: rgba(255, 255, 255, .56);
       color: var(--text);
       box-shadow: 0 16px 36px rgba(45, 63, 112, .18), inset 0 1px 0 rgba(255,255,255,.62);
       backdrop-filter: blur(18px) saturate(180%);
@@ -1548,7 +1557,8 @@
       transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
 
-    .language-fab:hover {
+    .language-fab:hover,
+    .language-float.is-open .language-fab {
       transform: translateY(-1px);
       border-color: rgba(79, 124, 255, .28);
       box-shadow: 0 18px 40px rgba(45, 63, 112, .22), inset 0 1px 0 rgba(255,255,255,.68);
@@ -1558,24 +1568,113 @@
       transform: scale(.96);
     }
 
+    .language-fab-icon {
+      display: inline-flex;
+      width: 18px;
+      height: 18px;
+      color: var(--text);
+    }
+
+    .language-fab-icon svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
     .language-fab-current {
       font-size: 13px;
       font-weight: 780;
       letter-spacing: -.01em;
     }
 
-    .language-fab-next {
-      padding-left: 8px;
-      border-left: 1px solid var(--line);
+    .language-menu {
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + 10px);
+      min-width: 164px;
+      padding: 8px;
+      border: 1px solid var(--line-strong);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .68);
+      color: var(--text);
+      box-shadow: 0 18px 44px rgba(45, 63, 112, .20), inset 0 1px 0 rgba(255,255,255,.70);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px) scale(.98);
+      transform-origin: right bottom;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+
+    .language-float.is-open .language-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .language-option {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 10px 12px;
+      border: 0;
+      border-radius: 14px;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+      text-align: left;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+
+    .language-option:hover {
+      background: rgba(79, 124, 255, .08);
+    }
+
+    .language-option.is-active {
+      background: rgba(79, 124, 255, .12);
+      color: var(--text);
+    }
+
+    .language-option-main {
+      font-size: 13px;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .language-option-code {
+      min-width: 28px;
       color: var(--muted);
-      font-size: 12px;
-      font-weight: 650;
+      font-size: 11px;
+      font-weight: 760;
+      letter-spacing: .06em;
+      text-align: right;
+    }
+
+    .language-option.is-active .language-option-code::after {
+      content: " ✓";
+      letter-spacing: 0;
     }
 
     @media (prefers-color-scheme: dark) {
       .language-fab {
         background: rgba(14, 24, 48, .70);
         box-shadow: 0 16px 36px rgba(0, 0, 0, .34), inset 0 1px 0 rgba(255,255,255,.08);
+      }
+
+      .language-menu {
+        background: rgba(14, 24, 48, .78);
+        box-shadow: 0 18px 44px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255,255,255,.08);
+      }
+
+      .language-option:hover,
+      .language-option.is-active {
+        background: rgba(138, 125, 255, .14);
       }
     }
 
@@ -1715,7 +1814,8 @@
 
       .content-shell {
         padding: 14px 14px calc(14px + max(12px, env(safe-area-inset-bottom)));
-        min-height: calc(var(--app-height) - max(12px, env(safe-area-inset-top)));
+        min-height: calc(100dvh - max(12px, env(safe-area-inset-top)));
+        min-height: calc(max(var(--app-height), 100dvh) - max(12px, env(safe-area-inset-top)));
       }
       .content-head {
         display: none;
@@ -1802,19 +1902,34 @@
     }
 
     @media (max-width: 860px) {
-      .language-fab {
+      .language-float {
         right: calc(14px + env(safe-area-inset-right));
         bottom: calc(14px + env(safe-area-inset-bottom));
-        min-height: 38px;
-        padding: 8px 12px;
+      }
+
+      .language-fab {
+        min-width: 42px;
+        min-height: 42px;
+        padding: 9px 12px;
+      }
+
+      .language-fab-icon,
+      .language-fab-icon svg {
+        width: 17px;
+        height: 17px;
       }
 
       .language-fab-current {
         font-size: 12px;
       }
 
-      .language-fab-next {
-        font-size: 11px;
+      .language-menu {
+        min-width: 154px;
+        border-radius: 18px;
+      }
+
+      .language-option {
+        padding: 9px 10px;
       }
     }
 
@@ -1826,7 +1941,8 @@
           max(10px, env(safe-area-inset-left)); }
       .content-shell {
         padding-bottom: calc(14px + max(10px, env(safe-area-inset-bottom)));
-        min-height: calc(var(--app-height) - max(10px, env(safe-area-inset-top)));
+        min-height: calc(100dvh - max(10px, env(safe-area-inset-top)));
+        min-height: calc(max(var(--app-height), 100dvh) - max(10px, env(safe-area-inset-top)));
       }
       .hero,
       .content-shell,
@@ -1898,10 +2014,32 @@
     </section>
   </main>
 
-  <button class="language-fab" id="languageSwitch" type="button">
-    <span class="language-fab-current" id="languageSwitchCurrent">中</span>
-    <span class="language-fab-next" id="languageSwitchNext">EN</span>
-  </button>
+  <div class="language-float" id="languageFloat">
+    <div class="language-menu" id="languageMenu" role="menu" aria-hidden="true">
+      <button class="language-option" type="button" data-lang="zh" role="menuitemradio" aria-checked="false">
+        <span class="language-option-main">中文</span>
+        <span class="language-option-code">ZH</span>
+      </button>
+      <button class="language-option" type="button" data-lang="en" role="menuitemradio" aria-checked="false">
+        <span class="language-option-main">English</span>
+        <span class="language-option-code">EN</span>
+      </button>
+      <button class="language-option" type="button" data-lang="tr" role="menuitemradio" aria-checked="false">
+        <span class="language-option-main">Türkçe</span>
+        <span class="language-option-code">TR</span>
+      </button>
+    </div>
+    <button class="language-fab" id="languageSwitch" type="button" aria-haspopup="menu" aria-expanded="false">
+      <span class="language-fab-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M3.6 9h16.8M3.6 15h16.8"></path>
+          <path d="M12 3c2.2 2.4 3.3 5.4 3.3 9S14.2 18.6 12 21c-2.2-2.4-3.3-5.4-3.3-9S9.8 5.4 12 3Z"></path>
+        </svg>
+      </span>
+      <span class="language-fab-current" id="languageSwitchCurrent">中</span>
+    </button>
+  </div>
 
   <template id="clockTemplate">
     <article class="clock-card">
@@ -1965,9 +2103,12 @@
 
       function syncViewportHeight() {
         var viewport = window.visualViewport;
-        var viewportHeight = viewport && viewport.height ? viewport.height : window.innerHeight;
-        var height = Math.min(window.innerHeight || viewportHeight, viewportHeight);
-        document.documentElement.style.setProperty("--app-height", Math.round(height) + "px");
+        var innerHeight = window.innerHeight || 0;
+        var viewportHeight = viewport && viewport.height ? viewport.height : 0;
+        var clientHeight = document.documentElement.clientHeight || 0;
+        var height = Math.max(innerHeight, viewportHeight, clientHeight);
+        if (!height) return;
+        document.documentElement.style.setProperty("--app-height", Math.ceil(height) + "px");
       }
 
       syncViewportHeight();
@@ -2158,14 +2299,23 @@
 
       function updateLanguageButton() {
         var dictionary = texts();
-        var nextLang = getNextLanguage(currentLang);
-        var label = dictionary.switchLanguage + "：" + LANGUAGE_NAMES[currentLang] + " → " + LANGUAGE_NAMES[nextLang];
+        var label = dictionary.switchLanguage + "：" + LANGUAGE_NAMES[currentLang];
 
         $("#languageSwitch")
           .attr("aria-label", label)
           .attr("title", label);
         $("#languageSwitchCurrent").text(LANGUAGE_LABELS[currentLang]);
-        $("#languageSwitchNext").text(LANGUAGE_LABELS[nextLang]);
+        $(".language-option").each(function () {
+          var $option = $(this);
+          var isActive = $option.attr("data-lang") === currentLang;
+          $option.toggleClass("is-active", isActive).attr("aria-checked", isActive ? "true" : "false");
+        });
+      }
+
+      function setLanguageMenuOpen(isOpen) {
+        $("#languageFloat").toggleClass("is-open", isOpen);
+        $("#languageSwitch").attr("aria-expanded", isOpen ? "true" : "false");
+        $("#languageMenu").attr("aria-hidden", isOpen ? "false" : "true");
       }
 
       function applyStaticLanguage() {
@@ -2494,8 +2644,28 @@
         });
       }
 
-      $("#languageSwitch").on("click", function () {
-        setLanguage(getNextLanguage(currentLang), true);
+      $("#languageSwitch").on("click", function (event) {
+        event.stopPropagation();
+        setLanguageMenuOpen(!$("#languageFloat").hasClass("is-open"));
+      });
+
+      $(".language-option").on("click", function (event) {
+        event.stopPropagation();
+        var languageKey = $(this).attr("data-lang");
+        setLanguage(languageKey, true);
+        setLanguageMenuOpen(false);
+      });
+
+      $(document).on("click", function (event) {
+        if (!$(event.target).closest("#languageFloat").length) {
+          setLanguageMenuOpen(false);
+        }
+      });
+
+      $(document).on("keydown", function (event) {
+        if (event.key === "Escape") {
+          setLanguageMenuOpen(false);
+        }
       });
 
       applyStaticLanguage();
