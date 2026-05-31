@@ -1549,7 +1549,7 @@
         padding:
           max(12px, env(safe-area-inset-top))
           max(12px, env(safe-area-inset-right))
-          calc(max(12px, env(safe-area-inset-bottom)) + 18px)
+          0
           max(12px, env(safe-area-inset-left));
       }
 
@@ -1625,7 +1625,10 @@
       .hero-foot { grid-template-columns: 1fr; gap: 8px; }
       .mini-panel { padding: 12px; }
 
-      .content-shell { padding: 14px; }
+      .content-shell {
+        padding: 14px 14px calc(14px + max(12px, env(safe-area-inset-bottom)));
+        min-height: calc(var(--app-height) - max(12px, env(safe-area-inset-top)));
+      }
       .content-head {
         display: none;
       }
@@ -1714,8 +1717,12 @@
       .app { padding:
           max(10px, env(safe-area-inset-top))
           max(10px, env(safe-area-inset-right))
-          max(10px, env(safe-area-inset-bottom))
+          0
           max(10px, env(safe-area-inset-left)); }
+      .content-shell {
+        padding-bottom: calc(14px + max(10px, env(safe-area-inset-bottom)));
+        min-height: calc(var(--app-height) - max(10px, env(safe-area-inset-top)));
+      }
       .hero,
       .content-shell,
       .clock-card { border-radius: 22px; }
@@ -1848,9 +1855,8 @@
 
       function syncViewportHeight() {
         var viewport = window.visualViewport;
-        var standalone = window.navigator.standalone ||
-          (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
-        var height = standalone ? window.innerHeight : (viewport && viewport.height ? viewport.height : window.innerHeight);
+        var viewportHeight = viewport && viewport.height ? viewport.height : window.innerHeight;
+        var height = Math.min(window.innerHeight || viewportHeight, viewportHeight);
         document.documentElement.style.setProperty("--app-height", Math.round(height) + "px");
       }
 
