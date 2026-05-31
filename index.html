@@ -1320,6 +1320,13 @@
     }
 
     @media (max-width: 860px) {
+      html, body {
+        height: auto;
+        min-height: var(--app-height);
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
       .app {
         height: auto;
         min-height: var(--app-height);
@@ -1327,11 +1334,31 @@
         padding:
           max(12px, env(safe-area-inset-top))
           max(12px, env(safe-area-inset-right))
-          max(12px, env(safe-area-inset-bottom))
+          calc(max(12px, env(safe-area-inset-bottom)) + 18px)
           max(12px, env(safe-area-inset-left));
       }
 
-      .shell { gap: 12px; }
+      .shell {
+        height: auto;
+        min-height: 0;
+        gap: 12px;
+      }
+
+      .content {
+        height: auto;
+        min-height: auto;
+        overflow: visible;
+      }
+
+      .content-shell {
+        overflow: visible;
+      }
+
+      .clock-grid {
+        flex: none;
+        min-height: auto;
+        overflow: visible;
+      }
 
       .panel,
       .content-shell,
@@ -1463,7 +1490,7 @@
       <section class="content panel content-shell">
         <div class="content-head">
           <div>
-            <h2 class="content-title">时间时钟</h2>
+            <h2 class="content-title">世界时钟</h2>
           </div>
           <div class="content-meta" id="contentMeta">--</div>
         </div>
