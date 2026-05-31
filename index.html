@@ -1153,14 +1153,17 @@
       color: var(--soft);
     }
 
+    .phase-early .phase-icon,
     .phase-morning .phase-icon,
     .phase-day .phase-icon,
     .phase-night .phase-icon,
     .phase-late .phase-icon {
       width: 8px;
       height: 8px;
+      min-width: 8px;
       border-radius: 50%;
       display: inline-block;
+      flex: 0 0 8px;
     }
 
     .phase-early .phase-icon { background: #ffb54d; box-shadow: 0 0 0 6px rgba(255,181,77,.14); }
@@ -1168,6 +1171,11 @@
     .phase-day .phase-icon { background: #ff8db4; box-shadow: 0 0 0 6px rgba(255,141,180,.14); }
     .phase-night .phase-icon { background: #8a7dff; box-shadow: 0 0 0 6px rgba(138,125,255,.14); }
     .phase-late .phase-icon { background: #55c5ff; box-shadow: 0 0 0 6px rgba(85,197,255,.14); }
+
+    .phase.phase-early {
+      background: linear-gradient(135deg, rgba(255, 213, 154, .30), rgba(255, 245, 226, .62));
+      border-color: rgba(255, 181, 77, .18);
+    }
 
     .phase.phase-morning {
       background: linear-gradient(135deg, rgba(163, 250, 222, .32), rgba(234, 255, 248, .66));
@@ -1185,6 +1193,11 @@
     }
 
     @media (prefers-color-scheme: dark) {
+      .phase.phase-early {
+        background: linear-gradient(135deg, rgba(255, 181, 77, .14), rgba(255, 213, 154, .08));
+        border-color: rgba(255, 181, 77, .18);
+      }
+
       .phase.phase-morning {
         background: linear-gradient(135deg, rgba(65, 217, 169, .16), rgba(85, 197, 255, .08));
         border-color: rgba(65, 217, 169, .18);

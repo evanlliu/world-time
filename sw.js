@@ -1,4 +1,4 @@
-const CACHE_NAME = "world-clock-v14-6-10-mobile-bottom-fill";
+const CACHE_NAME = "world-clock-v14-6-11-phase-dot-fix";
 const APP_SHELL = [
   "./",
   "./index.html",
