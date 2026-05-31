@@ -1,4 +1,4 @@
-const CACHE_NAME = "world-clock-v14-6-20-card-phase-page-light";
+const CACHE_NAME = "world-clock-v14-6-21-mobile-outer-height";
 const APP_SHELL = [
   "./",
   "./index.html",

@@ -1691,6 +1691,10 @@
     }
 
     @media (max-width: 860px) {
+      :root {
+        --mobile-shell-extra-height: 72px;
+      }
+
       html, body {
         height: auto;
         min-height: 100vh;
@@ -1814,8 +1818,8 @@
 
       .content-shell {
         padding: 14px 14px calc(14px + max(12px, env(safe-area-inset-bottom)));
-        min-height: calc(100dvh - max(12px, env(safe-area-inset-top)));
-        min-height: calc(max(var(--app-height), 100dvh) - max(12px, env(safe-area-inset-top)));
+        min-height: calc(100dvh + var(--mobile-shell-extra-height) - max(12px, env(safe-area-inset-top)));
+        min-height: calc(max(var(--app-height), 100dvh) + var(--mobile-shell-extra-height) - max(12px, env(safe-area-inset-top)));
       }
       .content-head {
         display: none;
@@ -1941,8 +1945,8 @@
           max(10px, env(safe-area-inset-left)); }
       .content-shell {
         padding-bottom: calc(14px + max(10px, env(safe-area-inset-bottom)));
-        min-height: calc(100dvh - max(10px, env(safe-area-inset-top)));
-        min-height: calc(max(var(--app-height), 100dvh) - max(10px, env(safe-area-inset-top)));
+        min-height: calc(100dvh + var(--mobile-shell-extra-height) - max(10px, env(safe-area-inset-top)));
+        min-height: calc(max(var(--app-height), 100dvh) + var(--mobile-shell-extra-height) - max(10px, env(safe-area-inset-top)));
       }
       .hero,
       .content-shell,
