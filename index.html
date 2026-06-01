@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#eef4ff" />
-  <meta name="color-scheme" content="light dark" />
+  <meta name="color-scheme" content="light" />
   <meta name="apple-mobile-web-app-title" content="世界时钟" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -49,6 +49,7 @@
 
   <style>
     :root {
+      color-scheme: light;
       --app-height: 100vh;
       --bg-1: #f8fbff;
       --bg-2: #eef3ff;
@@ -88,11 +89,13 @@
     }
 
     @supports (height: 100dvh) {
-      :root { --app-height: 100dvh; }
+      :root {
+      color-scheme: light; --app-height: 100dvh; }
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       :root {
+      color-scheme: light;
         --bg-1: #07111f;
         --bg-2: #0e1830;
         --bg-3: #161024;
@@ -258,7 +261,7 @@
       --page-overlay-bottom: rgba(3, 8, 18, .24);
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       :root[data-app-phase="early"],
     body[data-app-phase="early"] {
         --page-grad-1: #241c18;
@@ -460,7 +463,7 @@
       box-shadow: 0 18px 34px rgba(13, 20, 36, .20);
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       .hero[data-phase="early"] {
         background:
           radial-gradient(circle at 0% 0%, rgba(255, 196, 116, .14), transparent 26%),
@@ -659,7 +662,7 @@
       -webkit-backdrop-filter: blur(14px) saturate(180%);
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       .meta-pill, .card-pill, .chip { background: rgba(255,255,255,.08); }
     }
 
@@ -721,7 +724,7 @@
       box-shadow: var(--shadow-md);
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       .mini-panel { background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04)); }
     }
 
@@ -791,7 +794,7 @@
       overflow: hidden;
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       .clock-card { background: linear-gradient(180deg, rgba(14,24,48,.72), rgba(11,18,34,.56)); }
     }
 
@@ -801,7 +804,7 @@
       box-shadow: 0 18px 40px rgba(79,124,255,.08), var(--shadow-md);
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       .clock-card[data-id="local"] {
         border-color: rgba(85,197,255,.18);
         box-shadow: 0 18px 42px rgba(0,0,0,.24);
@@ -812,6 +815,78 @@
     .clock-card[data-tone="monterrey"] { --tone-a: #41d9a9; --tone-b: #55c5ff; --tone-c: rgba(85,197,255,.22); }
     .clock-card[data-tone="beijing"] { --tone-a: #ffab4d; --tone-b: #ffd76e; --tone-c: rgba(255,171,77,.22); }
     .clock-card[data-tone="istanbul"] { --tone-a: #8a7dff; --tone-b: #ff8db4; --tone-c: rgba(138,125,255,.22); }
+
+    :root {
+      --scene-monterrey: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20420%20260%27%3E%20%3Cg%20fill%3D%27none%27%20stroke%3D%27rgba%2817%2C26%2C46%2C0.88%29%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%20%3Cpath%20d%3D%27M24%20220h372%27/%3E%20%3Cpath%20d%3D%27M28%20220c26-10%2044-18%2060-40%2015-21%2028-52%2048-62%2019-10%2029%2016%2041%2038%2010%2018%2023%2022%2038%208%2020-19%2028-70%2047-97%2010-13%2020-20%2033-20%2022%200%2036%2018%2048%2040%2016%2029%2028%2079%2049%20133%27/%3E%20%3Cpath%20d%3D%27M214%20220v-48h28v48%27/%3E%20%3Cpath%20d%3D%27M249%20220v-64h22v64%27/%3E%20%3Cpath%20d%3D%27M278%20220v-38h20v38%27/%3E%20%3C/g%3E%20%3C/svg%3E");
+      --scene-beijing: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20420%20260%27%3E%20%3Cg%20fill%3D%27none%27%20stroke%3D%27rgba%2817%2C26%2C46%2C0.88%29%27%20stroke-width%3D%275.5%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%20%3Cpath%20d%3D%27M40%20220h340%27/%3E%20%3Cpath%20d%3D%27M110%20220v-22h200v22%27/%3E%20%3Cpath%20d%3D%27M132%20198v-28h156v28%27/%3E%20%3Cpath%20d%3D%27M150%20170v-20h120v20%27/%3E%20%3Cpath%20d%3D%27M167%20150c12-16%2029-24%2043-24s31%208%2043%2024%27/%3E%20%3Cpath%20d%3D%27M130%20170l-18%2010%27/%3E%20%3Cpath%20d%3D%27M290%20170l18%2010%27/%3E%20%3Cpath%20d%3D%27M172%20126v-14%27/%3E%20%3Cpath%20d%3D%27M248%20126v-14%27/%3E%20%3Ccircle%20cx%3D%27210%27%20cy%3D%27112%27%20r%3D%276%27/%3E%20%3C/g%3E%20%3C/svg%3E");
+      --scene-istanbul: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20420%20260%27%3E%20%3Cg%20fill%3D%27none%27%20stroke%3D%27rgba%2817%2C26%2C46%2C0.88%29%27%20stroke-width%3D%275.5%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%20%3Cpath%20d%3D%27M34%20220h352%27/%3E%20%3Cpath%20d%3D%27M116%20220v-30h188v30%27/%3E%20%3Cpath%20d%3D%27M140%20190c0-34%2032-62%2070-62s70%2028%2070%2062%27/%3E%20%3Cpath%20d%3D%27M170%20128c0-20%2018-36%2040-36s40%2016%2040%2036%27/%3E%20%3Cpath%20d%3D%27M124%20190l-12-54%27/%3E%20%3Cpath%20d%3D%27M296%20190l12-54%27/%3E%20%3Cpath%20d%3D%27M108%20136v54%27/%3E%20%3Cpath%20d%3D%27M312%20136v54%27/%3E%20%3Cpath%20d%3D%27M104%20132l4-24%204%2024%27/%3E%20%3Cpath%20d%3D%27M308%20132l4-24%204%2024%27/%3E%20%3Cpath%20d%3D%27M208%2092v-18%27/%3E%20%3Ccircle%20cx%3D%27208%27%20cy%3D%2772%27%20r%3D%274%27/%3E%20%3C/g%3E%20%3C/svg%3E");
+      --scene-generic: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20420%20260%27%3E%20%3Cg%20fill%3D%27none%27%20stroke%3D%27rgba%2817%2C26%2C46%2C0.88%29%27%20stroke-width%3D%275.5%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%20%3Cpath%20d%3D%27M38%20220h344%27/%3E%20%3Cpath%20d%3D%27M92%20220v-42h34v42%27/%3E%20%3Cpath%20d%3D%27M132%20220v-74h46v74%27/%3E%20%3Cpath%20d%3D%27M186%20220v-54h32v54%27/%3E%20%3Cpath%20d%3D%27M226%20220v-98h52v98%27/%3E%20%3Cpath%20d%3D%27M286%20220v-62h24v62%27/%3E%20%3Cpath%20d%3D%27M210%2098c0-22%2017-39%2039-39s39%2017%2039%2039c0%2024-21%2047-39%2069-18-22-39-45-39-69Z%27/%3E%20%3Ccircle%20cx%3D%27249%27%20cy%3D%2798%27%20r%3D%2712%27/%3E%20%3C/g%3E%20%3C/svg%3E");
+    }
+
+    .clock-card,
+    .clock-card .card-top,
+    .clock-card .card-main,
+    .clock-card .time-block,
+    .clock-card .card-bottom,
+    .clock-card .city-group,
+    .clock-card .badge-group,
+    .clock-card .dial {
+      position: relative;
+      z-index: 1;
+    }
+
+    .clock-card::after {
+      content: "";
+      position: absolute;
+      right: 7%;
+      bottom: 12%;
+      width: min(38%, 260px);
+      height: 52%;
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      background-size: contain;
+      opacity: .11;
+      pointer-events: none;
+      z-index: 0;
+      mix-blend-mode: multiply;
+      filter: saturate(.95);
+    }
+
+    .clock-card[data-id="local"]::after {
+      width: min(32%, 320px);
+      height: 58%;
+      right: 10%;
+      bottom: 8%;
+      opacity: .09;
+    }
+
+    .clock-card[data-scene="monterrey"]::after { background-image: var(--scene-monterrey); }
+    .clock-card[data-scene="beijing"]::after { background-image: var(--scene-beijing); }
+    .clock-card[data-scene="istanbul"]::after { background-image: var(--scene-istanbul); }
+    .clock-card[data-scene="generic"]::after { background-image: var(--scene-generic); }
+
+    .clock-card[data-phase="night"]::after,
+    .clock-card[data-phase="late"]::after { opacity: .17; }
+
+    @media (max-width: 1024px) {
+      .clock-card::after {
+        right: 4%;
+        bottom: 16%;
+        width: 34%;
+        height: 44%;
+        opacity: .10;
+      }
+      .clock-card[data-id="local"]::after {
+        width: 30%;
+        height: 42%;
+        right: 6%;
+        bottom: 20%;
+        opacity: .09;
+      }
+      .clock-card[data-phase="night"]::after,
+      .clock-card[data-phase="late"]::after { opacity: .14; }
+    }
+
 
     .clock-card {
       transition: background .28s ease, border-color .28s ease, box-shadow .28s ease;
@@ -862,7 +937,7 @@
       box-shadow: 0 22px 46px rgba(27, 36, 70, .24);
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       .clock-card[data-phase="early"] {
         background:
           radial-gradient(circle at 88% 0%, rgba(255, 196, 116, .16), transparent 32%),
@@ -1021,7 +1096,7 @@
       isolation: isolate;
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       .dial {
         --dial-glass: rgba(255, 255, 255, .08);
         border-color: rgba(255,255,255,.12);
@@ -1087,7 +1162,7 @@
       color: rgba(10, 18, 34, .68);
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       .clock-card[data-phase="early"] .dial {
         --dial-accent: rgba(255, 184, 77, .16);
         --dial-accent-soft: rgba(255, 218, 160, .08);
@@ -1215,7 +1290,7 @@
       opacity: .72;
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       .hand {
         background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(216,226,255,.86));
         box-shadow: 0 4px 10px rgba(0,0,0,.24);
@@ -1301,7 +1376,7 @@
       border-color: rgba(85, 197, 255, .18);
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       .phase.phase-early {
         background: linear-gradient(135deg, rgba(255, 184, 77, .14), rgba(255, 213, 154, .08));
         border-color: rgba(255, 184, 77, .18);
@@ -1510,7 +1585,7 @@
         }
       }
 
-      @media (prefers-color-scheme: dark) {
+      @media not all {
         .card-pill {
           background: rgba(255,255,255,.075);
           border-color: rgba(255,255,255,.10);
@@ -1768,7 +1843,7 @@
       letter-spacing: 0;
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media not all {
       .language-fab {
         background: rgba(14, 24, 48, .70);
         box-shadow: 0 16px 36px rgba(0, 0, 0, .34), inset 0 1px 0 rgba(255,255,255,.08);
@@ -1799,6 +1874,7 @@
 
     @media (max-width: 860px) {
       :root {
+      color-scheme: light;
         --mobile-shell-extra-height: 500px;
       }
 
@@ -2135,7 +2211,7 @@
         background: rgba(255,255,255,.92) !important;
       }
 
-      @media (prefers-color-scheme: dark) {
+      @media not all {
         .panel,
         .clock-card,
         .meta-pill,
@@ -2370,8 +2446,84 @@
         isLoading: false,
         hasRequested: false,
         coords: null,
-        labels: {}
+        labels: {},
+        raw: {}
       };
+
+      var COUNTRY_SHORT_NAMES = {
+        CN: { zh: "中国", en: "China", tr: "Çin" },
+        MX: { zh: "墨西哥", en: "Mexico", tr: "Meksika" },
+        TR: { zh: "土耳其", en: "Turkey", tr: "Türkiye" },
+        US: { zh: "美国", en: "United States", tr: "Amerika Birleşik Devletleri" },
+        GB: { zh: "英国", en: "United Kingdom", tr: "Birleşik Krallık" }
+      };
+
+      function getShortCountryName(countryCode, languageKey, fallbackName) {
+        var code = ((countryCode || "").toUpperCase()).trim();
+        if (COUNTRY_SHORT_NAMES[code] && COUNTRY_SHORT_NAMES[code][languageKey]) {
+          return COUNTRY_SHORT_NAMES[code][languageKey];
+        }
+
+        var name = (fallbackName || "").trim();
+        if (!name) return "";
+
+        var cleanupMap = {
+          zh: {
+            "中华人民共和国": "中国",
+            "墨西哥合众国": "墨西哥",
+            "土耳其共和国": "土耳其"
+          },
+          en: {
+            "People's Republic of China": "China",
+            "People’s Republic of China": "China",
+            "United Mexican States": "Mexico",
+            "Republic of Türkiye": "Turkey",
+            "Republic of Turkey": "Turkey"
+          },
+          tr: {
+            "Çin Halk Cumhuriyeti": "Çin",
+            "Birleşik Meksika Devletleri": "Meksika",
+            "Türkiye Cumhuriyeti": "Türkiye"
+          }
+        };
+
+        var localized = cleanupMap[languageKey] || {};
+        return localized[name] || name;
+      }
+
+      function getCountrySceneKey(countryCode) {
+        var code = ((countryCode || "").toUpperCase()).trim();
+        if (code === "CN") return "beijing";
+        if (code === "MX") return "monterrey";
+        if (code === "TR") return "istanbul";
+        return "generic";
+      }
+
+      function inferSceneFromLabel(label) {
+        var value = (label || "").toLowerCase();
+        if (!value) return "generic";
+        if (/北京|beijing|pekin/.test(value)) return "beijing";
+        if (/伊斯坦布尔|istanbul/.test(value)) return "istanbul";
+        if (/蒙特雷|monterrey|saltillo|萨尔蒂约|墨西哥城|mexico city|ciudad de méxico/.test(value)) return "monterrey";
+        if (/中国|china|çin/.test(value)) return "beijing";
+        if (/土耳其|turkey|türkiye/.test(value)) return "istanbul";
+        if (/墨西哥|mexico|meksika/.test(value)) return "monterrey";
+        return "generic";
+      }
+
+      function getSceneKeyForClock(clock) {
+        if (clock.id === "beijing") return "beijing";
+        if (clock.id === "istanbul") return "istanbul";
+        if (clock.id === "monterrey") return "monterrey";
+        if (clock.id === "local") {
+          if (preciseLocalPlace.raw && preciseLocalPlace.raw.countryCode) {
+            var sceneByCountry = getCountrySceneKey(preciseLocalPlace.raw.countryCode);
+            if (sceneByCountry) return sceneByCountry;
+          }
+          return inferSceneFromLabel(getCurrentLocalPlaceLabel()) || inferSceneFromLabel(localTimeZone) || "generic";
+        }
+        return clock.tone || "generic";
+      }
 
       function getReverseGeoLanguage(languageKey) {
         if (languageKey === "zh") return "zh";
@@ -2406,7 +2558,7 @@
 
       function formatPrecisePlace(data, languageKey) {
         var city = pickReverseGeoCity(data);
-        var country = ((data && data.countryName) || "").trim();
+        var country = getShortCountryName(data && data.countryCode, languageKey, (data && data.countryName) || "");
 
         if (city && country && city !== country) {
           return city + (languageKey === "zh" ? "，" : ", ") + country;
@@ -2430,7 +2582,9 @@
       function updateLocalPlaceLabel() {
         var label = getCurrentLocalPlaceLabel();
         $("#miniZone").text(label);
-        $(".clock-card[data-id='local'] .country").text(label);
+        var $localCard = $(".clock-card[data-id='local']");
+        $localCard.find(".country").text(label);
+        $localCard.attr("data-scene", getSceneKeyForClock({ id: "local", tone: "local" }));
       }
 
       function reversePreciseLocalPlace(languageKey) {
@@ -2453,6 +2607,10 @@
             return response.json();
           })
           .then(function (data) {
+            preciseLocalPlace.raw = {
+              countryCode: (data && data.countryCode) || "",
+              countryName: (data && data.countryName) || ""
+            };
             var label = formatPrecisePlace(data, targetLang);
             if (label) {
               preciseLocalPlace.labels[targetLang] = label;
@@ -3031,6 +3189,7 @@
           $card.attr("data-id", clock.id);
           $card.attr("data-tz", clock.timeZone);
           $card.attr("data-tone", clock.tone);
+          $card.attr("data-scene", getSceneKeyForClock(clock));
           var dictionary = texts();
           var country = clock.id === "local" ? getCurrentLocalPlaceLabel() : dictionary.countries[clock.countryKey];
           $card.find(".city").text(dictionary.cities[clock.cityKey]);
@@ -3061,6 +3220,9 @@
           var offset = getOffsetMinutes(now, timeZone);
           var phase = getPhase(parts);
 
+          if ($card.attr("data-id") === "local") {
+            $card.attr("data-scene", getSceneKeyForClock({ id: "local", tone: "local" }));
+          }
           $card.attr("data-phase", phase.key);
           $card.find(".weekday").text(parts.weekday);
           $card.find(".phase").removeClass("phase-early phase-morning phase-day phase-night phase-late").addClass("phase-" + phase.key);
