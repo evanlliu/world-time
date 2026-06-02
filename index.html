@@ -2653,24 +2653,16 @@
       }
 
       function getGlobalPhaseForPage(phaseKey) {
-        var pagePhaseMap = {
-          early: "early",
-          morning: "morning",
-          day: "day",
-          night: "morning",
-          late: "early"
-        };
-
-        return pagePhaseMap[phaseKey] || "morning";
+        return phaseKey || "morning";
       }
 
       function applyGlobalPhase(phaseKey) {
         var themeMap = {
-          early: "#f7efe3",
-          morning: "#eef6f1",
+          early: "#fff4df",
+          morning: "#e8faf1",
           day: "#fff1e7",
-          night: "#eef6f1",
-          late: "#f7efe3"
+          night: "#dbe3f8",
+          late: "#cbd7ec"
         };
 
         document.documentElement.setAttribute("data-app-phase", phaseKey);
