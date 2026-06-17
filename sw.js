@@ -1,4 +1,4 @@
-const CACHE_NAME = "world-clock-v14-6-40-late-deeper-only-3";
+const CACHE_NAME = "world-clock-v14-6-43-speed-tuned";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -7,8 +7,7 @@ const APP_SHELL = [
   "./manifest-tr.webmanifest",
   "./icon-192-v14627.png",
   "./icon-512-v14627.png",
-  "./apple-touch-icon-v14627.png",
-  "https://code.jquery.com/jquery-3.7.1.min.js"
+  "./apple-touch-icon-v14627.png"
 ];
 
 self.addEventListener("install", event => {

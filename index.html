@@ -93,34 +93,7 @@
       color-scheme: light; --app-height: 100dvh; }
     }
 
-    @media not all {
-      :root {
-      color-scheme: light;
-        --bg-1: #07111f;
-        --bg-2: #0e1830;
-        --bg-3: #161024;
-        --page-grad-1: #07111f;
-        --page-grad-2: #0e1830;
-        --page-grad-3: #161024;
-        --page-glow-a: rgba(85, 197, 255, .18);
-        --page-glow-b: rgba(138, 125, 255, .16);
-        --page-glow-c: rgba(255, 171, 77, .10);
-        --page-glow-d: rgba(65, 217, 169, .10);
-        --page-overlay-top: rgba(3, 8, 18, .06);
-        --page-overlay-bottom: rgba(2, 6, 16, .24);
-        --page-grid-opacity: .16;
-        --panel: rgba(11, 18, 34, .58);
-        --panel-strong: rgba(14, 24, 48, .82);
-        --panel-soft: rgba(255, 255, 255, .08);
-        --line: rgba(255, 255, 255, .09);
-        --line-strong: rgba(255, 255, 255, .15);
-        --text: rgba(255, 255, 255, .95);
-        --muted: rgba(255, 255, 255, .68);
-        --soft: rgba(255, 255, 255, .44);
-        --shadow-lg: 0 28px 75px rgba(0, 0, 0, .34);
-        --shadow-md: 0 14px 36px rgba(0, 0, 0, .26);
-      }
-    }
+
 
     * {
       box-sizing: border-box;
@@ -261,72 +234,6 @@
       --page-overlay-bottom: rgba(2, 6, 14, .38);
     }
 
-    @media not all {
-      :root[data-app-phase="early"],
-    body[data-app-phase="early"] {
-        --page-grad-1: #241c18;
-        --page-grad-2: #1a2030;
-        --page-grad-3: #120f17;
-        --page-glow-a: rgba(255, 196, 116, .16);
-        --page-glow-b: rgba(85, 197, 255, .10);
-        --page-glow-c: rgba(255, 171, 77, .12);
-        --page-glow-d: rgba(8, 12, 22, .16);
-        --page-overlay-top: rgba(4, 8, 18, .20);
-        --page-overlay-bottom: rgba(2, 5, 12, .36);
-      }
-
-      :root[data-app-phase="morning"],
-    body[data-app-phase="morning"] {
-        --page-grad-1: #0f2a26;
-        --page-grad-2: #122c35;
-        --page-grad-3: #111826;
-        --page-glow-a: rgba(65, 217, 169, .18);
-        --page-glow-b: rgba(85, 197, 255, .16);
-        --page-glow-c: rgba(201, 255, 239, .10);
-        --page-glow-d: rgba(7, 12, 22, .18);
-        --page-overlay-top: rgba(4, 8, 18, .20);
-        --page-overlay-bottom: rgba(2, 6, 14, .38);
-      }
-
-      :root[data-app-phase="day"],
-    body[data-app-phase="day"] {
-        --page-grad-1: #2b1c1a;
-        --page-grad-2: #291a28;
-        --page-grad-3: #141321;
-        --page-glow-a: rgba(255, 171, 77, .14);
-        --page-glow-b: rgba(255, 141, 180, .12);
-        --page-glow-c: rgba(255, 214, 122, .08);
-        --page-glow-d: rgba(7, 12, 22, .18);
-        --page-overlay-top: rgba(4, 8, 18, .22);
-        --page-overlay-bottom: rgba(2, 6, 14, .40);
-      }
-
-      :root[data-app-phase="night"],
-    body[data-app-phase="night"] {
-        --page-grad-1: #07101f;
-        --page-grad-2: #0a1430;
-        --page-grad-3: #0b1026;
-        --page-glow-a: rgba(85, 197, 255, .16);
-        --page-glow-b: rgba(138, 125, 255, .24);
-        --page-glow-c: rgba(54, 67, 110, .14);
-        --page-glow-d: rgba(1, 3, 10, .22);
-        --page-overlay-top: rgba(2, 6, 14, .30);
-        --page-overlay-bottom: rgba(1, 4, 10, .62);
-      }
-
-      :root[data-app-phase="late"],
-    body[data-app-phase="late"] {
-        --page-grad-1: #02060f;
-        --page-grad-2: #050a18;
-        --page-grad-3: #070d1d;
-        --page-glow-a: rgba(85, 197, 255, .12);
-        --page-glow-b: rgba(138, 125, 255, .18);
-        --page-glow-c: rgba(18, 26, 46, .16);
-        --page-glow-d: rgba(0, 1, 6, .34);
-        --page-overlay-top: rgba(1, 4, 10, .40);
-        --page-overlay-bottom: rgba(0, 2, 6, .78);
-      }
-    }
 
     .app {
       width: 100%;
@@ -375,174 +282,8 @@
       mix-blend-mode: screen;
     }
 
-    .hero {
-      padding: 18px;
-      position: relative;
-      top: auto;
-      height: 100%;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .hero,
-    .hero-clock,
-    .mini-panel {
-      transition: background .32s ease, border-color .32s ease, box-shadow .32s ease;
-    }
-
-    .hero[data-phase="early"] {
-      background:
-        radial-gradient(circle at 0% 0%, rgba(255, 184, 77, .18), transparent 26%),
-        radial-gradient(circle at 100% 100%, rgba(115, 199, 255, .16), transparent 28%),
-        linear-gradient(180deg, rgba(255, 249, 236, .92), rgba(244, 248, 255, .80));
-    }
-
-    .hero[data-phase="morning"] {
-      background:
-        radial-gradient(circle at 0% 0%, rgba(65, 217, 169, .24), transparent 28%),
-        radial-gradient(circle at 100% 100%, rgba(85, 197, 255, .18), transparent 30%),
-        linear-gradient(180deg, rgba(240, 255, 249, .94), rgba(232, 248, 255, .82));
-      border-color: rgba(65, 217, 169, .16);
-      box-shadow: 0 22px 48px rgba(37, 122, 96, .10);
-    }
-
-    .hero[data-phase="day"] {
-      background:
-        radial-gradient(circle at 0% 0%, rgba(255, 171, 77, .18), transparent 26%),
-        radial-gradient(circle at 100% 100%, rgba(255, 141, 180, .16), transparent 28%),
-        linear-gradient(180deg, rgba(255, 250, 243, .92), rgba(255, 242, 247, .78));
-    }
-
-    .hero[data-phase="night"] {
-      background:
-        radial-gradient(circle at 0% 0%, rgba(85, 197, 255, .26), transparent 30%),
-        radial-gradient(circle at 100% 100%, rgba(138, 125, 255, .42), transparent 36%),
-        linear-gradient(180deg, rgba(205, 216, 250, .98), rgba(158, 177, 222, .95));
-      border-color: rgba(98, 113, 184, .30);
-      box-shadow: 0 26px 58px rgba(42, 58, 108, .22);
-    }
-
-    .hero[data-phase="late"] {
-      background:
-        radial-gradient(circle at 0% 0%, rgba(85, 197, 255, .10), transparent 24%),
-        radial-gradient(circle at 100% 100%, rgba(104, 118, 208, .22), transparent 30%),
-        linear-gradient(180deg, rgba(158, 176, 219, .995), rgba(84, 106, 163, .985));
-      border-color: rgba(54, 70, 132, .38);
-      box-shadow: 0 32px 72px rgba(16, 24, 54, .38);
-    }
-
-    .hero[data-phase="early"] .hero-clock,
-    .hero[data-phase="early"] .mini-panel {
-      background: linear-gradient(145deg, rgba(255, 234, 194, .42), rgba(255,255,255,.18));
-    }
-
-    .hero[data-phase="morning"] .hero-clock,
-    .hero[data-phase="morning"] .mini-panel {
-      background: linear-gradient(145deg, rgba(163, 250, 222, .34), rgba(255,255,255,.18));
-      border-color: rgba(65, 217, 169, .14);
-    }
-
-    .hero[data-phase="day"] .hero-clock,
-    .hero[data-phase="day"] .mini-panel {
-      background: linear-gradient(145deg, rgba(255, 227, 197, .34), rgba(255,245,249,.18));
-    }
-
-    .hero[data-phase="night"] .hero-clock,
-    .hero[data-phase="night"] .mini-panel {
-      background: linear-gradient(145deg, rgba(146, 161, 216, .42), rgba(221,228,250,.18));
-      border-color: rgba(98, 113, 184, .22);
-      box-shadow: 0 18px 32px rgba(24, 32, 58, .18);
-    }
-
-    .hero[data-phase="late"] .hero-clock,
-    .hero[data-phase="late"] .mini-panel {
-      background: linear-gradient(145deg, rgba(78, 99, 164, .52), rgba(176,188,220,.08));
-      border-color: rgba(54, 70, 132, .30);
-      box-shadow: 0 18px 34px rgba(6, 13, 28, .32);
-    }
-
-    @media not all {
-      .hero[data-phase="early"] {
-        background:
-          radial-gradient(circle at 0% 0%, rgba(255, 196, 116, .14), transparent 26%),
-          radial-gradient(circle at 100% 100%, rgba(85, 197, 255, .08), transparent 28%),
-          linear-gradient(180deg, rgba(36, 30, 26, .84), rgba(16, 20, 30, .70));
-      }
-
-      .hero[data-phase="morning"] {
-        background:
-          radial-gradient(circle at 0% 0%, rgba(65, 217, 169, .18), transparent 28%),
-          radial-gradient(circle at 100% 100%, rgba(85, 197, 255, .14), transparent 30%),
-          linear-gradient(180deg, rgba(14, 40, 34, .90), rgba(11, 24, 34, .80));
-        border-color: rgba(65, 217, 169, .16);
-        box-shadow: 0 24px 56px rgba(0, 0, 0, .24);
-      }
-
-      .hero[data-phase="day"] {
-        background:
-          radial-gradient(circle at 0% 0%, rgba(255, 171, 77, .14), transparent 26%),
-          radial-gradient(circle at 100% 100%, rgba(255, 141, 180, .10), transparent 28%),
-          linear-gradient(180deg, rgba(42, 28, 26, .86), rgba(21, 18, 30, .74));
-      }
-
-      .hero[data-phase="night"] {
-        background:
-          radial-gradient(circle at 0% 0%, rgba(85, 197, 255, .14), transparent 28%),
-          radial-gradient(circle at 100% 100%, rgba(138, 125, 255, .20), transparent 30%),
-          linear-gradient(180deg, rgba(8, 16, 36, .94), rgba(5, 11, 24, .88));
-        border-color: rgba(85, 197, 255, .16);
-        box-shadow: 0 28px 64px rgba(0, 0, 0, .34);
-      }
-
-      .hero[data-phase="late"] {
-        background:
-          radial-gradient(circle at 0% 0%, rgba(85, 197, 255, .12), transparent 28%),
-          radial-gradient(circle at 100% 100%, rgba(138, 125, 255, .18), transparent 30%),
-          linear-gradient(180deg, rgba(3, 7, 18, .97), rgba(1, 3, 10, .92));
-        border-color: rgba(138, 125, 255, .18);
-        box-shadow: 0 32px 74px rgba(0, 0, 0, .46);
-      }
-
-      .hero[data-phase="early"] .hero-clock,
-      .hero[data-phase="early"] .mini-panel {
-        background: linear-gradient(145deg, rgba(255, 196, 116, .10), rgba(255,255,255,.03));
-      }
-
-      .hero[data-phase="morning"] .hero-clock,
-      .hero[data-phase="morning"] .mini-panel {
-        background: linear-gradient(145deg, rgba(65, 217, 169, .14), rgba(85,197,255,.05));
-        border-color: rgba(65, 217, 169, .14);
-      }
-
-      .hero[data-phase="day"] .hero-clock,
-      .hero[data-phase="day"] .mini-panel {
-        background: linear-gradient(145deg, rgba(255, 171, 77, .10), rgba(255,141,180,.04));
-      }
-
-      .hero[data-phase="night"] .hero-clock,
-      .hero[data-phase="night"] .mini-panel {
-        background: linear-gradient(145deg, rgba(19, 32, 68, .88), rgba(8, 16, 30, .70));
-        border-color: rgba(85, 197, 255, .14);
-        box-shadow: 0 16px 28px rgba(0,0,0,.28);
-      }
-
-      .hero[data-phase="late"] .hero-clock,
-      .hero[data-phase="late"] .mini-panel {
-        background: linear-gradient(145deg, rgba(6, 12, 28, .92), rgba(2, 5, 12, .80));
-        border-color: rgba(138, 125, 255, .16);
-        box-shadow: 0 18px 30px rgba(0,0,0,.34);
-      }
-    }
-
-    .hero-head,
-    .hero-foot,
-    .hero-main,
     .content-head,
     .clock-card,
-    .mini-panel,
-    .meta-pill,
     .card-pill,
     .dial,
     .dial-center,
@@ -552,98 +293,6 @@
       z-index: 1;
     }
 
-    .hero-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-    }
-
-    .app-icon {
-      width: 58px;
-      height: 58px;
-      flex: 0 0 auto;
-      border-radius: 18px;
-      position: relative;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 26% 16%, rgba(255,255,255,.95), transparent 18%),
-        linear-gradient(145deg, rgba(79,124,255,.98), rgba(85,197,255,.90) 46%, rgba(138,125,255,.92));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.78), 0 14px 30px rgba(79,124,255,.26);
-    }
-
-    .app-icon::before {
-      content: "";
-      position: absolute;
-      inset: 12px;
-      border: 2px solid rgba(255,255,255,.92);
-      border-radius: 50%;
-    }
-
-    .app-icon::after {
-      content: "";
-      position: absolute;
-      left: 28px;
-      top: 18px;
-      width: 3px;
-      height: 13px;
-      background: rgba(255,255,255,.98);
-      border-radius: 999px;
-      transform-origin: 50% 100%;
-      box-shadow: 8px 10px 0 rgba(255,255,255,.92);
-    }
-
-    .brand-copy { min-width: 0; }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .live-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--mint);
-      box-shadow: 0 0 0 8px rgba(65, 217, 169, .15);
-    }
-
-    .hero-title {
-      margin: 6px 0 0;
-      font-size: clamp(30px, 3.2vw, 42px);
-      line-height: 1.02;
-      letter-spacing: -0.04em;
-    }
-
-    .hero-subtitle {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.65;
-      max-width: 28ch;
-    }
-
-    .hero-head-side {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 8px;
-      flex: 0 0 auto;
-    }
-
-    .meta-pill,
     .card-pill,
     .chip {
       display: inline-flex;
@@ -662,84 +311,6 @@
       -webkit-backdrop-filter: blur(14px) saturate(180%);
     }
 
-    @media not all {
-      .meta-pill, .card-pill, .chip { background: rgba(255,255,255,.08); }
-    }
-
-    .hero-main {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 0;
-    }
-
-    .hero-clock {
-      padding: 16px;
-      border-radius: var(--radius-xl);
-      background: linear-gradient(145deg, rgba(79,124,255,.14), rgba(255,255,255,.10));
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-md);
-    }
-
-    .hero-clock-label {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
-
-    .hero-time {
-      font-size: clamp(48px, 6.4vw, 70px);
-      line-height: .9;
-      letter-spacing: -0.06em;
-      font-weight: 780;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .hero-date {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .hero-zone {
-      margin-top: 10px;
-      color: var(--soft);
-      font-size: 13px;
-      word-break: break-word;
-    }
-
-    .hero-foot {
-      margin-top: auto;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .mini-panel {
-      padding: 12px 11px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.34), rgba(255,255,255,.14));
-      box-shadow: var(--shadow-md);
-    }
-
-    @media not all {
-      .mini-panel { background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04)); }
-    }
-
-    .mini-label {
-      color: var(--soft);
-      font-size: 12px;
-      margin-bottom: 8px;
-    }
-
-    .mini-value {
-      font-size: 17px;
-      font-weight: 700;
-      line-height: 1.2;
-      word-break: break-word;
-    }
 
     .content {
       min-width: 0;
@@ -792,11 +363,9 @@
       backdrop-filter: var(--blur);
       -webkit-backdrop-filter: var(--blur);
       overflow: hidden;
+      contain: layout paint;
     }
 
-    @media not all {
-      .clock-card { background: linear-gradient(180deg, rgba(14,24,48,.72), rgba(11,18,34,.56)); }
-    }
 
     .clock-card[data-id="local"] {
       grid-column: 1 / -1;
@@ -804,12 +373,6 @@
       box-shadow: 0 18px 40px rgba(79,124,255,.08), var(--shadow-md);
     }
 
-    @media not all {
-      .clock-card[data-id="local"] {
-        border-color: rgba(85,197,255,.18);
-        box-shadow: 0 18px 42px rgba(0,0,0,.24);
-      }
-    }
 
     .clock-card[data-tone="local"] { --tone-a: #41d9a9; --tone-b: #55c5ff; --tone-c: rgba(85,197,255,.22); }
     .clock-card[data-tone="monterrey"] { --tone-a: #41d9a9; --tone-b: #55c5ff; --tone-c: rgba(85,197,255,.22); }
@@ -937,48 +500,6 @@
       box-shadow: 0 24px 48px rgba(16, 24, 54, .36);
     }
 
-    @media not all {
-      .clock-card[data-phase="early"] {
-        background:
-          radial-gradient(circle at 88% 0%, rgba(255, 196, 116, .16), transparent 32%),
-          radial-gradient(circle at 12% 100%, rgba(85, 197, 255, .10), transparent 24%),
-          linear-gradient(135deg, rgba(36, 31, 38, .92), rgba(17, 25, 43, .78));
-      }
-
-      .clock-card[data-phase="morning"] {
-        background:
-          radial-gradient(circle at 0% 0%, rgba(65, 217, 169, .18), transparent 28%),
-          radial-gradient(circle at 100% 100%, rgba(85, 197, 255, .14), transparent 30%),
-          linear-gradient(135deg, rgba(13, 37, 35, .94), rgba(17, 24, 40, .82));
-        border-color: rgba(65, 217, 169, .14);
-        box-shadow: 0 18px 36px rgba(0,0,0,.24);
-      }
-
-      .clock-card[data-phase="day"] {
-        background:
-          radial-gradient(circle at 100% 0%, rgba(255, 171, 77, .16), transparent 30%),
-          radial-gradient(circle at 0% 100%, rgba(255, 141, 180, .10), transparent 26%),
-          linear-gradient(135deg, rgba(42, 28, 28, .92), rgba(35, 21, 38, .76));
-      }
-
-      .clock-card[data-phase="night"] {
-        background:
-          radial-gradient(circle at 100% 0%, rgba(138, 125, 255, .38), transparent 36%),
-          radial-gradient(circle at 0% 100%, rgba(85, 197, 255, .20), transparent 32%),
-          linear-gradient(135deg, rgba(8, 17, 40, .99), rgba(5, 11, 28, .95));
-        border-color: rgba(108, 132, 218, .22);
-        box-shadow: 0 20px 38px rgba(0,0,0,.38);
-      }
-
-      .clock-card[data-phase="late"] {
-        background:
-          radial-gradient(circle at 100% 0%, rgba(85, 197, 255, .26), transparent 36%),
-          radial-gradient(circle at 10% 90%, rgba(138, 125, 255, .30), transparent 32%),
-          linear-gradient(135deg, rgba(2, 6, 18, .99), rgba(2, 5, 16, .96));
-        border-color: rgba(148, 136, 255, .22);
-        box-shadow: 0 22px 42px rgba(0,0,0,.44);
-      }
-    }
 
     .clock-card::after {
       content: "";
@@ -1096,21 +617,6 @@
       isolation: isolate;
     }
 
-    @media not all {
-      .dial {
-        --dial-glass: rgba(255, 255, 255, .08);
-        border-color: rgba(255,255,255,.12);
-        background:
-          radial-gradient(circle at 32% 24%, rgba(255,255,255,.18), transparent 20%),
-          radial-gradient(circle at 70% 76%, var(--dial-accent), transparent 38%),
-          radial-gradient(circle at 50% 50%, rgba(255,255,255,.05), transparent 58%),
-          linear-gradient(145deg, var(--dial-glass), rgba(255,255,255,.025));
-        box-shadow:
-          inset 0 1px 0 rgba(255,255,255,.14),
-          inset 0 -18px 30px rgba(0,0,0,.14),
-          0 26px 48px rgba(0,0,0,.30);
-      }
-    }
 
     .clock-card[data-phase="early"] .dial {
       --dial-accent: rgba(255, 184, 77, .24);
@@ -1162,67 +668,6 @@
       color: rgba(10, 18, 34, .68);
     }
 
-    @media not all {
-      .clock-card[data-phase="early"] .dial {
-        --dial-accent: rgba(255, 184, 77, .16);
-        --dial-accent-soft: rgba(255, 218, 160, .08);
-        border-color: rgba(255, 196, 116, .16);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.14), inset 0 -18px 30px rgba(0,0,0,.18), 0 24px 44px rgba(0,0,0,.30);
-      }
-
-      .clock-card[data-phase="morning"] .dial {
-        --dial-accent: rgba(65, 217, 169, .16);
-        --dial-accent-soft: rgba(85, 197, 255, .08);
-        border-color: rgba(65, 217, 169, .16);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.14), inset 0 -18px 30px rgba(0,0,0,.18), 0 24px 44px rgba(0,0,0,.30);
-      }
-
-      .clock-card[data-phase="day"] .dial {
-        --dial-accent: rgba(255, 141, 180, .16);
-        --dial-accent-soft: rgba(255, 171, 77, .08);
-        border-color: rgba(255, 141, 180, .16);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.14), inset 0 -18px 30px rgba(0,0,0,.18), 0 24px 44px rgba(0,0,0,.30);
-      }
-
-      .clock-card[data-phase="night"] .dial {
-        --dial-accent: rgba(138, 125, 255, .18);
-        --dial-accent-soft: rgba(85, 197, 255, .08);
-        border-color: rgba(138, 125, 255, .18);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.12), inset 0 -18px 30px rgba(0,0,0,.20), 0 26px 48px rgba(0,0,0,.36);
-      }
-
-      .clock-card[data-phase="late"] .dial {
-        --dial-accent: rgba(85, 197, 255, .14);
-        --dial-accent-soft: rgba(138, 125, 255, .07);
-        border-color: rgba(85, 197, 255, .14);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.10), inset 0 -18px 30px rgba(0,0,0,.22), 0 28px 52px rgba(0,0,0,.44);
-      }
-
-      .clock-card[data-phase="night"] .time,
-      .clock-card[data-phase="night"] .city,
-      .clock-card[data-phase="late"] .time,
-      .clock-card[data-phase="late"] .city {
-        color: rgba(255,255,255,.97);
-        text-shadow: 0 10px 28px rgba(0,0,0,.32);
-      }
-
-      .clock-card[data-phase="night"] .country,
-      .clock-card[data-phase="night"] .date,
-      .clock-card[data-phase="late"] .country,
-      .clock-card[data-phase="late"] .date {
-        color: rgba(255,255,255,.72);
-      }
-
-      .clock-card[data-phase="night"] .card-pill::after,
-      .clock-card[data-phase="late"] .card-pill::after {
-        color: rgba(255,255,255,.92);
-      }
-
-      .clock-card[data-phase="night"] .card-pill::before,
-      .clock-card[data-phase="late"] .card-pill::before {
-        color: rgba(255,255,255,.58);
-      }
-    }
 
     .dial::before {
       content: "";
@@ -1290,12 +735,6 @@
       opacity: .72;
     }
 
-    @media not all {
-      .hand {
-        background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(216,226,255,.86));
-        box-shadow: 0 4px 10px rgba(0,0,0,.24);
-      }
-    }
 
     .hour { width: 5px; height: 27%; }
     .minute { width: 3.5px; height: 39%; }
@@ -1376,32 +815,6 @@
       border-color: rgba(85, 197, 255, .18);
     }
 
-    @media not all {
-      .phase.phase-early {
-        background: linear-gradient(135deg, rgba(255, 184, 77, .14), rgba(255, 213, 154, .08));
-        border-color: rgba(255, 184, 77, .18);
-      }
-
-      .phase.phase-morning {
-        background: linear-gradient(135deg, rgba(65, 217, 169, .16), rgba(85, 197, 255, .08));
-        border-color: rgba(65, 217, 169, .18);
-      }
-
-      .phase.phase-day {
-        background: linear-gradient(135deg, rgba(255, 141, 180, .18), rgba(255, 171, 77, .08));
-        border-color: rgba(255, 141, 180, .18);
-      }
-
-      .phase.phase-night {
-        background: linear-gradient(135deg, rgba(68, 76, 142, .44), rgba(27, 36, 72, .56));
-        border-color: rgba(138, 125, 255, .20);
-      }
-
-      .phase.phase-late {
-        background: linear-gradient(135deg, rgba(29, 46, 84, .58), rgba(9, 17, 34, .68));
-        border-color: rgba(85, 197, 255, .18);
-      }
-    }
 
     .content-shell {
       border-radius: var(--radius-2xl);
@@ -1414,10 +827,6 @@
         overflow: hidden;
       }
 
-      .hero-subtitle,
-      .hero-title {
-        display: none;
-      }
 
       .clock-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1585,12 +994,6 @@
         }
       }
 
-      @media not all {
-        .card-pill {
-          background: rgba(255,255,255,.075);
-          border-color: rgba(255,255,255,.10);
-        }
-      }
     }
 
     @media (min-width: 1025px) {
@@ -1843,33 +1246,12 @@
       letter-spacing: 0;
     }
 
-    @media not all {
-      .language-fab {
-        background: rgba(14, 24, 48, .70);
-        box-shadow: 0 16px 36px rgba(0, 0, 0, .34), inset 0 1px 0 rgba(255,255,255,.08);
-      }
-
-      .language-menu {
-        background: rgba(14, 24, 48, .78);
-        box-shadow: 0 18px 44px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255,255,255,.08);
-      }
-
-      .language-option:hover,
-      .language-option.is-active {
-        background: rgba(138, 125, 255, .14);
-      }
-    }
 
     @media (max-width: 1024px) {
       .shell {
         grid-template-columns: 1fr;
       }
 
-      .hero {
-        position: relative;
-        top: auto;
-        min-height: auto;
-      }
     }
 
     @media (max-width: 860px) {
@@ -1972,32 +1354,6 @@
       .content-shell,
       .clock-card { border-radius: 24px; }
 
-      .hero {
-        padding: 16px;
-        gap: 14px;
-      }
-
-      .hero-head {
-        align-items: center;
-      }
-
-      .app-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
-      }
-
-      .app-icon::before { inset: 10px; }
-      .app-icon::after { left: 23px; top: 15px; }
-
-      .hero-title { font-size: 28px; }
-      .hero-subtitle { font-size: 13px; max-width: none; }
-      .hero-head-side { align-items: flex-start; }
-      .hero-head { flex-direction: column; }
-      .hero-clock { padding: 16px; }
-      .hero-time { font-size: clamp(42px, 14vw, 64px); }
-      .hero-foot { grid-template-columns: 1fr; gap: 8px; }
-      .mini-panel { padding: 12px; }
 
       .content-shell {
         padding: 14px 14px calc(14px + max(12px, env(safe-area-inset-bottom)));
@@ -2169,18 +1525,11 @@
         min-height: calc(100dvh + var(--mobile-shell-extra-height) - max(10px, env(safe-area-inset-top)));
         min-height: calc(max(var(--app-height), 100dvh) + var(--mobile-shell-extra-height) - max(10px, env(safe-area-inset-top)));
       }
-      .hero,
       .content-shell,
       .clock-card { border-radius: 22px; }
-      .hero-title { font-size: 24px; }
-      .hero-subtitle { font-size: 12px; }
-      .hero-clock-label,
-      .hero-date,
-      .hero-zone,
       .content-meta,
       .country,
       .date { font-size: 12px; }
-      .meta-pill,
       .card-pill,
       .chip { min-height: 32px; padding: 7px 11px; font-size: 11px; }
       .card-main,
@@ -2196,13 +1545,11 @@
       .dial::before { inset: 10px; }
       .city { font-size: 21px; }
       .time { font-size: clamp(36px, 11.5vw, 50px); }
-      .hero-time { font-size: clamp(40px, 12vw, 56px); }
     }
 
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
       .panel,
       .clock-card,
-      .meta-pill,
       .card-pill,
       .chip,
       .dial {
@@ -2211,16 +1558,6 @@
         background: rgba(255,255,255,.92) !important;
       }
 
-      @media not all {
-        .panel,
-        .clock-card,
-        .meta-pill,
-        .card-pill,
-        .chip,
-        .dial {
-          background: rgba(13, 20, 38, .96) !important;
-        }
-      }
     }
   </style>
 </head>
@@ -2303,9 +1640,100 @@
     </article>
   </template>
 
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script>
-    $(function () {
+    document.addEventListener("DOMContentLoaded", function () {
+      var formatterCache = Object.create(null);
+      var snapshotCache = Object.create(null);
+      var snapshotCacheMinuteKey = "";
+      var normalizedTimeZoneCache = Object.create(null);
+      var cardRefs = [];
+      var lastRenderedMinuteKey = "";
+      var minuteTimer = null;
+      var viewportRaf = 0;
+      var lastGlobalPhase = "";
+
+      var dom = {
+        root: document.documentElement,
+        body: document.body,
+        themeMeta: document.querySelector('meta[name="theme-color"]'),
+        appleTitle: document.querySelector('meta[name="apple-mobile-web-app-title"]'),
+        manifest: document.getElementById("dynamicManifest") || document.querySelector('link[rel="manifest"]'),
+        shell: document.querySelector(".shell"),
+        contentTitle: document.querySelector(".content-title"),
+        contentMeta: document.getElementById("contentMeta"),
+        clockGrid: document.getElementById("clockGrid"),
+        clockTemplate: document.getElementById("clockTemplate"),
+        languageFloat: document.getElementById("languageFloat"),
+        languageSwitch: document.getElementById("languageSwitch"),
+        languageSwitchCurrent: document.getElementById("languageSwitchCurrent"),
+        languageMenu: document.getElementById("languageMenu"),
+        languageOptions: Array.prototype.slice.call(document.querySelectorAll(".language-option"))
+      };
+
+      function setText(node, value) {
+        if (!node) return;
+        var next = value == null ? "" : String(value);
+        if (node.__worldClockText === next) return;
+        node.textContent = next;
+        node.__worldClockText = next;
+      }
+
+      function setTextAll(nodes, value) {
+        if (!nodes || !nodes.length) return;
+        for (var i = 0; i < nodes.length; i += 1) {
+          setText(nodes[i], value);
+        }
+      }
+
+      function setHtml(node, value) {
+        if (!node) return;
+        var next = value == null ? "" : String(value);
+        if (node.__worldClockHtml === next) return;
+        node.innerHTML = next;
+        node.__worldClockHtml = next;
+      }
+
+      function setAttr(node, name, value) {
+        if (!node) return;
+        var next = value == null ? "" : String(value);
+        if (node.getAttribute(name) === next) return;
+        node.setAttribute(name, next);
+      }
+
+      function toggleClass(node, className, enabled) {
+        if (!node) return;
+        var shouldEnable = !!enabled;
+        if (node.classList.contains(className) === shouldEnable) return;
+        node.classList.toggle(className, shouldEnable);
+      }
+
+      function setPhaseClassAll(nodes, phaseKey) {
+        if (!nodes || !nodes.length) return;
+        var nextClass = "phase-" + phaseKey;
+        for (var i = 0; i < nodes.length; i += 1) {
+          var node = nodes[i];
+          if (node.__worldClockPhaseClass === nextClass) continue;
+          node.classList.remove("phase-early", "phase-morning", "phase-day", "phase-night", "phase-late");
+          node.classList.add(nextClass);
+          node.__worldClockPhaseClass = nextClass;
+        }
+      }
+
+      function setStyle(node, propertyName, value) {
+        if (!node) return;
+        var next = value == null ? "" : String(value);
+        if (node.__worldClockStyles && node.__worldClockStyles[propertyName] === next) return;
+        if (!node.__worldClockStyles) node.__worldClockStyles = Object.create(null);
+        node.style[propertyName] = next;
+        node.__worldClockStyles[propertyName] = next;
+      }
+
+      function getCachedFormatter(key, locale, options) {
+        if (!formatterCache[key]) {
+          formatterCache[key] = new Intl.DateTimeFormat(locale, options);
+        }
+        return formatterCache[key];
+      }
       function lockMobileGestures() {
         var lastTouchEnd = 0;
 
@@ -2323,14 +1751,17 @@
           }, { passive: false });
         });
 
+        var preventScrollQuery = window.matchMedia ? window.matchMedia("(max-width: 860px)") : null;
         document.addEventListener("touchmove", function (event) {
-          if (!window.matchMedia || window.matchMedia("(max-width: 860px)").matches) {
+          if (!preventScrollQuery || preventScrollQuery.matches) {
             event.preventDefault();
           }
         }, { passive: false });
       }
 
-      lockMobileGestures();
+      if ((navigator.maxTouchPoints || 0) > 0 || "ontouchstart" in window) {
+        lockMobileGestures();
+      }
 
       function syncViewportHeight() {
         var viewport = window.visualViewport;
@@ -2342,10 +1773,19 @@
         document.documentElement.style.setProperty("--app-height", Math.ceil(height) + "px");
       }
 
+      function requestViewportHeightSync() {
+        if (viewportRaf) return;
+        viewportRaf = requestAnimationFrame(function () {
+          viewportRaf = 0;
+          syncViewportHeight();
+        });
+      }
+
       syncViewportHeight();
-      $(window).on("resize orientationchange", syncViewportHeight);
+      window.addEventListener("resize", requestViewportHeightSync, { passive: true });
+      window.addEventListener("orientationchange", requestViewportHeightSync, { passive: true });
       if (window.visualViewport) {
-        window.visualViewport.addEventListener("resize", syncViewportHeight);
+        window.visualViewport.addEventListener("resize", requestViewportHeightSync, { passive: true });
       }
 
       function prettyZone(zone) {
@@ -2579,12 +2019,20 @@
         return getLocalPlaceLabel(localTimeZone);
       }
 
+      function getLocalCardRef() {
+        for (var i = 0; i < cardRefs.length; i += 1) {
+          if (cardRefs[i].id === "local") return cardRefs[i];
+        }
+        return null;
+      }
+
       function updateLocalPlaceLabel() {
         var label = getCurrentLocalPlaceLabel();
-        $("#miniZone").text(label);
-        var $localCard = $(".clock-card[data-id='local']");
-        $localCard.find(".country").text(label);
-        $localCard.attr("data-scene", getSceneKeyForClock({ id: "local", tone: "local" }));
+        var localCard = getLocalCardRef();
+        if (localCard) {
+          setText(localCard.country, label);
+          setAttr(localCard.card, "data-scene", getSceneKeyForClock({ id: "local", tone: "local" }));
+        }
       }
 
       function reversePreciseLocalPlace(languageKey) {
@@ -2657,6 +2105,9 @@
       }
 
       function applyGlobalPhase(phaseKey) {
+        if (phaseKey === lastGlobalPhase) return;
+        lastGlobalPhase = phaseKey;
+
         var themeMap = {
           early: "#fff4df",
           morning: "#e8faf1",
@@ -2665,16 +2116,11 @@
           late: "#cbd7ec"
         };
 
-        document.documentElement.setAttribute("data-app-phase", phaseKey);
-        document.body.setAttribute("data-app-phase", phaseKey);
-        var heroPanel = document.getElementById("heroPanel");
-        if (heroPanel) {
-          heroPanel.setAttribute("data-phase", phaseKey);
-        }
+        setAttr(dom.root, "data-app-phase", phaseKey);
+        setAttr(dom.body, "data-app-phase", phaseKey);
 
-        var themeMeta = document.querySelector('meta[name="theme-color"]');
-        if (themeMeta && themeMap[phaseKey]) {
-          themeMeta.setAttribute("content", themeMap[phaseKey]);
+        if (themeMap[phaseKey]) {
+          setAttr(dom.themeMeta, "content", themeMap[phaseKey]);
         }
       }
 
@@ -2698,7 +2144,6 @@
           behindYouLabel: "比你慢",
           sameZoneDirect: "同一时区",
           locatingPlace: "正在获取实际位置…",
-          heroZonePrefix: "时区：",
           cities: {
             local: "当前位置",
             monterrey: "蒙特雷",
@@ -2741,7 +2186,6 @@
           behindYouLabel: "Behind you",
           sameZoneDirect: "Same time zone",
           locatingPlace: "Getting current location…",
-          heroZonePrefix: "Time zone: ",
           cities: {
             local: "Current Location",
             monterrey: "Monterrey",
@@ -2785,7 +2229,6 @@
           behindYouLabel: "Senden geride",
           sameZoneDirect: "Aynı saat dilimi",
           locatingPlace: "Mevcut konum alınıyor…",
-          heroZonePrefix: "Saat dilimi: ",
           cities: {
             local: "Mevcut konum",
             monterrey: "Monterrey",
@@ -2844,52 +2287,40 @@
         return I18N[currentLang] || I18N.zh;
       }
 
-      function getNextLanguage(lang) {
-        var index = LANGUAGE_ORDER.indexOf(lang);
-        return LANGUAGE_ORDER[(index + 1) % LANGUAGE_ORDER.length] || "zh";
-      }
-
       function updateManifestLink() {
-        var manifest = document.getElementById("dynamicManifest") || document.querySelector('link[rel="manifest"]');
-        if (manifest) {
-          manifest.setAttribute("href", MANIFEST_BY_LANGUAGE[currentLang] || MANIFEST_BY_LANGUAGE.zh);
-        }
+        setAttr(dom.manifest, "href", MANIFEST_BY_LANGUAGE[currentLang] || MANIFEST_BY_LANGUAGE.zh);
       }
 
       function updateLanguageButton() {
         var dictionary = texts();
         var label = dictionary.switchLanguage + "：" + LANGUAGE_NAMES[currentLang];
 
-        $("#languageSwitch")
-          .attr("aria-label", label)
-          .attr("title", label);
-        $("#languageSwitchCurrent").text(LANGUAGE_LABELS[currentLang]);
-        $(".language-option").each(function () {
-          var $option = $(this);
-          var isActive = $option.attr("data-lang") === currentLang;
-          $option.toggleClass("is-active", isActive).attr("aria-checked", isActive ? "true" : "false");
+        setAttr(dom.languageSwitch, "aria-label", label);
+        setAttr(dom.languageSwitch, "title", label);
+        setText(dom.languageSwitchCurrent, LANGUAGE_LABELS[currentLang]);
+
+        dom.languageOptions.forEach(function (option) {
+          var isActive = option.getAttribute("data-lang") === currentLang;
+          toggleClass(option, "is-active", isActive);
+          setAttr(option, "aria-checked", isActive ? "true" : "false");
         });
       }
 
       function setLanguageMenuOpen(isOpen) {
-        $("#languageFloat").toggleClass("is-open", isOpen);
-        $("#languageSwitch").attr("aria-expanded", isOpen ? "true" : "false");
-        $("#languageMenu").attr("aria-hidden", isOpen ? "false" : "true");
+        toggleClass(dom.languageFloat, "is-open", isOpen);
+        setAttr(dom.languageSwitch, "aria-expanded", isOpen ? "true" : "false");
+        setAttr(dom.languageMenu, "aria-hidden", isOpen ? "false" : "true");
       }
 
       function applyStaticLanguage() {
         var dictionary = texts();
-        document.documentElement.lang = dictionary.htmlLang;
+        dom.root.lang = dictionary.htmlLang;
         document.title = dictionary.title;
-        $(".shell").attr("aria-label", dictionary.title);
-        $(".content-title").text(dictionary.title);
+        setAttr(dom.shell, "aria-label", dictionary.title);
+        setText(dom.contentTitle, dictionary.title);
         updateManifestLink();
         updateLanguageButton();
-
-        var appleTitle = document.querySelector('meta[name="apple-mobile-web-app-title"]');
-        if (appleTitle) {
-          appleTitle.setAttribute("content", dictionary.title);
-        }
+        setAttr(dom.appleTitle, "content", dictionary.title);
       }
 
       function setLanguage(languageKey, shouldSave) {
@@ -2904,7 +2335,7 @@
 
         applyStaticLanguage();
         buildCards();
-        tick();
+        tick(true);
 
         if (preciseLocalPlace.coords && !preciseLocalPlace.labels[currentLang]) {
           reversePreciseLocalPlace(currentLang);
@@ -2914,11 +2345,16 @@
       }
 
       function normalizeTimeZone(timeZone) {
+        var key = timeZone || "UTC";
+        if (normalizedTimeZoneCache[key]) return normalizedTimeZoneCache[key];
+
         try {
-          return new Intl.DateTimeFormat("en-US", { timeZone: timeZone }).resolvedOptions().timeZone || timeZone;
+          normalizedTimeZoneCache[key] = new Intl.DateTimeFormat("en-US", { timeZone: key }).resolvedOptions().timeZone || key;
         } catch (error) {
-          return timeZone;
+          normalizedTimeZoneCache[key] = key;
         }
+
+        return normalizedTimeZoneCache[key];
       }
 
       var clocks = [
@@ -2957,35 +2393,32 @@
         return mobileLayoutQuery ? mobileLayoutQuery.matches : false;
       }
 
-      function isSameLocalMinute(date, timeZone) {
-        var localParts = getParts(date, localTimeZone);
-        var targetParts = getParts(date, timeZone);
-
-        return localParts.year === targetParts.year &&
-          localParts.month === targetParts.month &&
-          localParts.day === targetParts.day &&
-          localParts.hour === targetParts.hour &&
-          localParts.minute === targetParts.minute;
-      }
-
       function getVisibleClocks(date) {
         if (!isMobileLayout()) return clocks;
 
+        var localOffset = getClockSnapshot(date, localTimeZone).offset;
         return clocks.filter(function (clock) {
           if (clock.id === "local") return true;
-          return !isSameLocalMinute(date, clock.timeZone);
+          return getClockSnapshot(date, clock.timeZone).offset !== localOffset;
         });
       }
-
-      $("#miniZone").text(getCurrentLocalPlaceLabel());
-      $("#heroZone").text(texts().heroZonePrefix + prettyZone(localTimeZone));
 
       function pad(num) {
         return String(num).padStart(2, "0");
       }
 
-      function getParts(date, timeZone) {
-        var formatter = new Intl.DateTimeFormat(texts().locale, {
+      function getClockSnapshot(date, timeZone) {
+        var locale = texts().locale;
+        var minuteKey = currentLang + "|" + Math.floor(date.getTime() / 60000);
+        if (minuteKey !== snapshotCacheMinuteKey) {
+          snapshotCache = Object.create(null);
+          snapshotCacheMinuteKey = minuteKey;
+        }
+
+        var cacheKey = timeZone;
+        if (snapshotCache[cacheKey]) return snapshotCache[cacheKey];
+
+        var formatter = getCachedFormatter("snapshot|" + locale + "|" + timeZone, locale, {
           timeZone: timeZone,
           hour12: false,
           year: "numeric",
@@ -2996,56 +2429,38 @@
           minute: "2-digit"
         });
 
-        var parts = {};
+        var formattedParts = {};
         formatter.formatToParts(date).forEach(function (part) {
-          parts[part.type] = part.value;
+          formattedParts[part.type] = part.value;
         });
 
-        var hour = parseInt(parts.hour, 10);
+        var hour = parseInt(formattedParts.hour, 10);
         if (hour === 24) hour = 0;
 
-        return {
-          year: parts.year,
-          month: parts.month,
-          day: parts.day,
-          weekday: parts.weekday,
-          hour: hour,
-          minute: parseInt(parts.minute, 10)
-        };
-      }
-
-      function getOffsetMinutes(date, timeZone) {
-        var formatter = new Intl.DateTimeFormat("en-US", {
-          timeZone: timeZone,
-          hour12: false,
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit"
-        });
-
-        var parts = {};
-        formatter.formatToParts(date).forEach(function (part) {
-          parts[part.type] = part.value;
-        });
-
-        var hour = parseInt(parts.hour, 10);
-        if (hour === 24) hour = 0;
-
+        var minute = parseInt(formattedParts.minute, 10);
         var utcTime = Date.UTC(
-          parseInt(parts.year, 10),
-          parseInt(parts.month, 10) - 1,
-          parseInt(parts.day, 10),
+          parseInt(formattedParts.year, 10),
+          parseInt(formattedParts.month, 10) - 1,
+          parseInt(formattedParts.day, 10),
           hour,
-          parseInt(parts.minute, 10),
+          minute,
           0
         );
 
         var referenceTime = new Date(date.getTime());
         referenceTime.setSeconds(0, 0);
 
-        return Math.round((utcTime - referenceTime.getTime()) / 60000);
+        snapshotCache[cacheKey] = {
+          year: formattedParts.year,
+          month: formattedParts.month,
+          day: formattedParts.day,
+          weekday: formattedParts.weekday,
+          hour: hour,
+          minute: minute,
+          offset: Math.round((utcTime - referenceTime.getTime()) / 60000)
+        };
+
+        return snapshotCache[cacheKey];
       }
 
       function formatTime(parts) {
@@ -3090,12 +2505,6 @@
         }
 
         return localizedMonth(parts.month) + " " + parseInt(parts.day, 10);
-      }
-
-      function formatUtcOffset(minutes) {
-        var sign = minutes >= 0 ? "+" : "-";
-        var abs = Math.abs(minutes);
-        return "UTC" + sign + pad(Math.floor(abs / 60)) + ":" + pad(abs % 60);
       }
 
       function getDateSerial(parts) {
@@ -3160,120 +2569,194 @@
         return { key: phaseKey, label: texts().phases[phaseKey] };
       }
 
-      function rotateHands($card, parts) {
+      function getMinuteRenderKey(date) {
+        return currentLang + "|" + Math.floor(date.getTime() / 60000);
+      }
+
+      function rotateHands(cardRef, parts) {
         var minuteDeg = parts.minute * 6;
         var hourDeg = ((parts.hour % 12) + parts.minute / 60) * 30;
 
-        $card.find(".hour").css("transform", "translateX(-50%) rotate(" + hourDeg + "deg)");
-        $card.find(".minute").css("transform", "translateX(-50%) rotate(" + minuteDeg + "deg)");
+        setStyle(cardRef.hourHand, "transform", "translateX(-50%) rotate(" + hourDeg + "deg)");
+        setStyle(cardRef.minuteHand, "transform", "translateX(-50%) rotate(" + minuteDeg + "deg)");
+      }
+
+      function createCardRef(card, clock) {
+        return {
+          id: clock.id,
+          timeZone: clock.timeZone,
+          clock: clock,
+          card: card,
+          city: card.querySelector(".city"),
+          country: card.querySelector(".country"),
+          weekdays: Array.prototype.slice.call(card.querySelectorAll(".weekday")),
+          phases: Array.prototype.slice.call(card.querySelectorAll(".phase")),
+          phaseTexts: Array.prototype.slice.call(card.querySelectorAll(".phase-text")),
+          time: card.querySelector(".time"),
+          date: card.querySelector(".date"),
+          mobileTitleDate: card.querySelector(".mobile-title-date"),
+          utcPill: card.querySelector(".utc-pill"),
+          diffPill: card.querySelector(".diff-pill"),
+          hourHand: card.querySelector(".hour"),
+          minuteHand: card.querySelector(".minute")
+        };
       }
 
       function buildCards() {
-        var template = $("#clockTemplate").html();
-        var $grid = $("#clockGrid");
-        var visibleClocks = getVisibleClocks(new Date());
+        if (!dom.clockGrid || !dom.clockTemplate || !dom.clockTemplate.content) return;
 
-        $grid.empty();
-        $("#cityCount").text(visibleClocks.length);
+        var visibleClocks = getVisibleClocks(new Date());
+        var dictionary = texts();
+        var fragment = document.createDocumentFragment();
+
+        cardRefs = [];
+        dom.clockGrid.textContent = "";
 
         visibleClocks.forEach(function (clock) {
-          var $card = $(template);
-          $card.attr("data-id", clock.id);
-          $card.attr("data-tz", clock.timeZone);
-          $card.attr("data-tone", clock.tone);
-          $card.attr("data-scene", getSceneKeyForClock(clock));
-          var dictionary = texts();
+          var card = dom.clockTemplate.content.firstElementChild.cloneNode(true);
+          setAttr(card, "data-id", clock.id);
+          setAttr(card, "data-tz", clock.timeZone);
+          setAttr(card, "data-tone", clock.tone);
+          setAttr(card, "data-scene", getSceneKeyForClock(clock));
+
+          var cardRef = createCardRef(card, clock);
           var country = clock.id === "local" ? getCurrentLocalPlaceLabel() : dictionary.countries[clock.countryKey];
-          $card.find(".city").text(dictionary.cities[clock.cityKey]);
-          $card.find(".country").text(country);
-          $grid.append($card);
+
+          setText(cardRef.city, dictionary.cities[clock.cityKey]);
+          setText(cardRef.country, country);
+          cardRefs.push(cardRef);
+          fragment.appendChild(card);
         });
+
+        dom.clockGrid.appendChild(fragment);
+        lastRenderedMinuteKey = "";
       }
 
-      function tick() {
+      function tick(force) {
         var now = new Date();
-        var localOffset = getOffsetMinutes(now, localTimeZone);
-        var localParts = getParts(now, localTimeZone);
+        var renderKey = getMinuteRenderKey(now);
+        if (!force && renderKey === lastRenderedMinuteKey) return;
+        lastRenderedMinuteKey = renderKey;
+
+        var dictionary = texts();
+        var localParts = getClockSnapshot(now, localTimeZone);
+        var localOffset = localParts.offset;
         var localPhase = getPhase(localParts);
+        var fullDateText = formatFullDate(localParts);
 
         applyGlobalPhase(getGlobalPhaseForPage(localPhase.key));
+        setText(dom.contentMeta, dictionary.today + " · " + fullDateText + " · " + dictionary.synced);
 
-        $("#heroTime").text(formatTime(localParts));
-        $("#heroDate").text(formatFullDate(localParts));
-        $("#heroZone").text(texts().heroZonePrefix + prettyZone(localTimeZone));
-        $("#miniUtc").text(formatUtcOffset(localOffset));
-        $("#lastSync").text(formatTime(localParts));
-        $("#contentMeta").text(texts().today + " · " + formatFullDate(localParts) + " · " + texts().synced);
-
-        $(".clock-card").each(function () {
-          var $card = $(this);
-          var timeZone = $card.attr("data-tz");
-          var parts = getParts(now, timeZone);
-          var offset = getOffsetMinutes(now, timeZone);
+        cardRefs.forEach(function (cardRef) {
+          var parts = getClockSnapshot(now, cardRef.timeZone);
           var phase = getPhase(parts);
 
-          if ($card.attr("data-id") === "local") {
-            $card.attr("data-scene", getSceneKeyForClock({ id: "local", tone: "local" }));
+          if (cardRef.id === "local") {
+            setAttr(cardRef.card, "data-scene", getSceneKeyForClock({ id: "local", tone: "local" }));
           }
-          $card.attr("data-phase", phase.key);
-          $card.find(".weekday").text(parts.weekday);
-          $card.find(".phase").removeClass("phase-early phase-morning phase-day phase-night phase-late").addClass("phase-" + phase.key);
-          $card.find(".phase-text").text(phase.label);
-          $card.find(".time").text(formatTime(parts));
-          $card.find(".date").text(formatShortDate(parts));
-          $card.find(".mobile-title-date").text(formatMonthDay(parts));
-          var dictionary = texts();
+
+          setAttr(cardRef.card, "data-phase", phase.key);
+          setTextAll(cardRef.weekdays, parts.weekday);
+          setPhaseClassAll(cardRef.phases, phase.key);
+          setTextAll(cardRef.phaseTexts, phase.label);
+          setText(cardRef.time, formatTime(parts));
+          setText(cardRef.date, formatShortDate(parts));
+          setText(cardRef.mobileTitleDate, formatMonthDay(parts));
+
           var localDateText = formatLocalDateRelation(parts, localParts);
-          var relation = getLocalRelation(offset, localOffset);
+          var relation = getLocalRelation(parts.offset, localOffset);
           var relationLabelHtml = relation.label ? '<span class="pill-label">' + relation.label + '</span>' : '';
 
-          $card.find(".utc-pill")
-            .attr("data-label", dictionary.localDateLabel)
-            .attr("data-value", localDateText)
-            .html('<span class="pill-label">' + dictionary.localDateLabel + '</span><b class="pill-value">' + localDateText + '</b>');
-          $card.find(".diff-pill")
-            .toggleClass("is-same", relation.isSame)
-            .attr("data-label", relation.label)
-            .attr("data-value", relation.value)
-            .html(relationLabelHtml + '<b class="pill-value">' + relation.value + '</b>');
-          rotateHands($card, parts);
+          setAttr(cardRef.utcPill, "data-label", dictionary.localDateLabel);
+          setAttr(cardRef.utcPill, "data-value", localDateText);
+          setHtml(cardRef.utcPill, '<span class="pill-label">' + dictionary.localDateLabel + '</span><b class="pill-value">' + localDateText + '</b>');
+
+          toggleClass(cardRef.diffPill, "is-same", relation.isSame);
+          setAttr(cardRef.diffPill, "data-label", relation.label);
+          setAttr(cardRef.diffPill, "data-value", relation.value);
+          setHtml(cardRef.diffPill, relationLabelHtml + '<b class="pill-value">' + relation.value + '</b>');
+
+          rotateHands(cardRef, parts);
         });
       }
 
-      $("#languageSwitch").on("click", function (event) {
-        event.stopPropagation();
-        setLanguageMenuOpen(!$("#languageFloat").hasClass("is-open"));
+      function scheduleNextTick() {
+        if (minuteTimer) clearTimeout(minuteTimer);
+        var now = Date.now();
+        var delay = 60000 - (now % 60000) + 80;
+        minuteTimer = setTimeout(function () {
+          tick(false);
+          scheduleNextTick();
+        }, delay);
+      }
+
+      function runAfterFirstPaint(callback, timeout) {
+        var run = function () {
+          try { callback(); } catch (error) {}
+        };
+
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            if ("requestIdleCallback" in window) {
+              window.requestIdleCallback(run, { timeout: timeout || 1600 });
+            } else {
+              setTimeout(run, timeout || 600);
+            }
+          });
+        });
+      }
+
+      function registerServiceWorker() {
+        if ("serviceWorker" in navigator && location.protocol === "https:") {
+          navigator.serviceWorker.register("./sw.js").catch(function () {});
+        }
+      }
+
+      if (dom.languageSwitch) {
+        dom.languageSwitch.addEventListener("click", function (event) {
+          event.stopPropagation();
+          setLanguageMenuOpen(!(dom.languageFloat && dom.languageFloat.classList.contains("is-open")));
+        });
+      }
+
+      dom.languageOptions.forEach(function (option) {
+        option.addEventListener("click", function (event) {
+          event.stopPropagation();
+          var languageKey = option.getAttribute("data-lang");
+          setLanguage(languageKey, true);
+          setLanguageMenuOpen(false);
+        });
       });
 
-      $(".language-option").on("click", function (event) {
-        event.stopPropagation();
-        var languageKey = $(this).attr("data-lang");
-        setLanguage(languageKey, true);
-        setLanguageMenuOpen(false);
-      });
-
-      $(document).on("click", function (event) {
-        if (!$(event.target).closest("#languageFloat").length) {
+      document.addEventListener("click", function (event) {
+        if (!dom.languageFloat || !dom.languageFloat.contains(event.target)) {
           setLanguageMenuOpen(false);
         }
       });
 
-      $(document).on("keydown", function (event) {
+      document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
           setLanguageMenuOpen(false);
         }
       });
 
+      document.addEventListener("visibilitychange", function () {
+        if (!document.hidden) {
+          tick(true);
+          scheduleNextTick();
+        }
+      });
+
       applyStaticLanguage();
       buildCards();
-      tick();
-      requestPreciseLocalPlace();
-      setInterval(tick, 1000);
+      tick(true);
+      scheduleNextTick();
+      runAfterFirstPaint(requestPreciseLocalPlace, 1200);
 
       if (mobileLayoutQuery) {
         var handleLayoutChange = function () {
           buildCards();
-          tick();
+          tick(true);
         };
 
         if (mobileLayoutQuery.addEventListener) {
@@ -3283,9 +2766,7 @@
         }
       }
 
-      if ("serviceWorker" in navigator && location.protocol === "https:") {
-        navigator.serviceWorker.register("./sw.js").catch(function () {});
-      }
+      runAfterFirstPaint(registerServiceWorker, 1800);
     });
   </script>
 </body>
